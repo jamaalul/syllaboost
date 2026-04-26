@@ -6,7 +6,8 @@
 
 @section('content')
     <section class="w-screen h-screen bg-zinc-100 flex flex-row items-center justify-center relative overflow-hidden">
-        <span class="text-sky-600 absolute left-8 top-8">
+        <span class="text-sky-600 absolute left-8 top-8 cursor-pointer hover:scale-105 transition duration-100"
+            onclick="window.location.href = '{{ route('welcome') }}'">
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_29_199)">
                     <path
@@ -54,8 +55,7 @@
                             Already registered?
                         </a>
 
-                        <button type="submit"
-                            :disabled="!name || !email || loading"
+                        <button type="submit" :disabled="!name || !email || loading"
                             class="flex w-28 flex-row justify-center items-center bg-zinc-950 disabled:bg-zinc-700 py-2 rounded-full h-fit text-white active:scale-98 transition duration-100 cursor-pointer disabled:cursor-not-allowed">
                             <span x-show="!loading">Register</span>
                             <span x-show="loading" style="display: none;">
