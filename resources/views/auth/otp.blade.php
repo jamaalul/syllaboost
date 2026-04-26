@@ -33,7 +33,6 @@
 
                 <form method="POST" action="{{ route('otp.verify') }}" class="flex flex-col gap-4" x-data="{ otp: '', loading: false }" @submit="loading = true">
                     @csrf
-                    <input type="hidden" name="email" value="{{ $email }}">
                     
                     <div>
                         <label for="otp" class="font-medium text-zinc-500">6-Digit Code</label>

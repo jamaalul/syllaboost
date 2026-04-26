@@ -47,6 +47,7 @@ class RegisteredUserController extends Controller
 
         Mail::to($user->email)->send(new SendOtpMail($otp));
 
-        return redirect()->route('otp.show')->with('email', $user->email);
+        session()->put('email', $user->email);
+        return redirect()->route('otp.show');
     }
 }

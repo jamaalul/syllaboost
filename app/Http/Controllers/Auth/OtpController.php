@@ -23,11 +23,14 @@ class OtpController extends Controller
     public function verify(Request $request)
     {
         $request->validate([
-            'email' => ['required', 'email'],
             'otp' => ['required', 'string', 'size:6'],
         ]);
 
-        $email = $request->email;
+        $email = $request->session()->get('email');
+        
+        if (!$email) {
+            return redirect()->route('login');
+        }
         $cachedOtp = Cache::get('otp_'.$email);
 
         if (! $cachedOtp || $cachedOtp !== $request->otp) {
