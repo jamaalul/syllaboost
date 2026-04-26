@@ -5,7 +5,9 @@
 @endsection
 
 @section('content')
-    <section class="w-screen h-screen bg-zinc-100 flex flex-row items-center justify-center relative overflow-hidden">
+    <section
+        class="w-screen h-screen bg-zinc-100 flex flex-row items-center justify-center relative overflow-hidden bg-cover"
+        style="background-image: url('{{ asset('assets/mesh.webp') }}');">
         <span class="text-sky-600 absolute left-8 top-8">
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_29_199)">
@@ -31,12 +33,14 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('otp.verify') }}" class="flex flex-col gap-4" x-data="{ otp: '', loading: false }" @submit="loading = true">
+                <form method="POST" action="{{ route('otp.verify') }}" class="flex flex-col gap-4"
+                    x-data="{ otp: '', loading: false }" @submit="loading = true">
                     @csrf
-                    
+
                     <div>
                         <label for="otp" class="font-medium text-zinc-500">6-Digit Code</label>
-                        <input type="text" name="otp" id="otp" required autofocus autocomplete="one-time-code" x-model="otp" maxlength="6" pattern="\d{6}"
+                        <input type="text" name="otp" id="otp" required autofocus autocomplete="one-time-code" x-model="otp"
+                            maxlength="6" pattern="\d{6}"
                             class="w-full rounded-lg bg-white border border-zinc-300 text-3xl tracking-[1rem] text-center py-2 px-2 focus:outline-sky-600 @error('otp') border-red-500 @enderror">
                         @error('otp')
                             <p class="text-sm text-red-500 mt-2 text-center">{{ $message }}</p>
@@ -45,13 +49,14 @@
 
                     <div class="flex items-center justify-between">
                         <label class="flex items-center cursor-pointer">
-                            <input type="checkbox" name="remember" class="rounded border-zinc-300 text-sky-600 shadow-sm focus:ring-sky-500">
+                            <input type="checkbox" name="remember">
                             <span class="ms-2 text-sm text-zinc-600">Remember me</span>
                         </label>
                     </div>
 
                     <div class="flex items-center justify-between mt-4">
-                        <a class="underline text-sm text-zinc-600 hover:text-zinc-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500" href="{{ route('login') }}">
+                        <a class="underline text-sm text-zinc-600 hover:text-zinc-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
+                            href="{{ route('login') }}">
                             Cancel
                         </a>
 
@@ -59,8 +64,9 @@
                             class="flex flex-row justify-center w-28 items-center bg-zinc-950 disabled:bg-zinc-700 py-2 rounded-full h-fit text-white active:scale-98 transition duration-100 cursor-pointer disabled:cursor-not-allowed">
                             <span x-show="!loading">Verify</span>
                             <span x-show="loading" style="display: none;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
                                     class="lucide lucide-loader-circle-icon lucide-loader-circle animate-spin">
                                     <path d="M21 12a9 9 0 1 1-6.219-8.56" />
                                 </svg>

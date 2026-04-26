@@ -5,7 +5,9 @@
 @endsection
 
 @section('content')
-    <section class="w-screen h-screen bg-zinc-100 flex flex-row items-center justify-center relative overflow-hidden">
+    <section
+        class="w-screen h-screen bg-zinc-100 flex flex-row items-center justify-center relative overflow-hidden bg-cover"
+        style="background-image: url('{{ asset('assets/mesh.webp') }}');">
         <span class="text-sky-600 absolute left-8 top-8 cursor-pointer hover:scale-105 transition duration-100"
             onclick="window.location.href = '{{ route('welcome') }}'">
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">

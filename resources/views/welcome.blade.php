@@ -81,7 +81,8 @@
             </div>
         </nav>
     </div>
-    <section class="flex flex-col justify-center items-center bg-zinc-50 pt-16 md:pt-0 w-screen md:h-screen">
+    <section class="flex flex-col justify-center items-center bg-zinc-50 pt-16 md:pt-0 w-screen md:h-screen bg-cover"
+        style="background-image: url('{{ asset('assets/mesh.webp') }}');">
         <div class="flex flex-col justify-center md:items-center mx-auto p-10 md:pt-0 w-full max-w-5xl md:h-screen">
             <div class="bg-sky-200 mb-4 px-3 py-1 rounded-full w-fit">
                 <p class="font-semibold text-sky-700 text-sm">1000+ students</p>

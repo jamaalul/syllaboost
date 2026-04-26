@@ -5,8 +5,10 @@
 @endsection
 
 @section('content')
-    <section class="w-screen h-screen bg-zinc-100 flex flex-row items-center justify-center relative overflow-hidden">
-        <span class="text-sky-600 absolute left-8 top-8 cursor-pointer hover:scale-105 transition duration-100"
+    <section
+        class="w-screen h-screen bg-zinc-100 flex flex-row items-center justify-center relative overflow-hidden bg-cover"
+        style="background-image: url('{{ asset('assets/mesh.webp') }}');">
+        <span class=" text-sky-600 absolute left-8 top-8 cursor-pointer hover:scale-105 transition duration-100"
             onclick="window.location.href = '{{ route('welcome') }}'">
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_29_199)">
@@ -23,14 +25,14 @@
         </span>
         <div class="flex justify-center items-center mx-auto p-10 md:pt-0 w-full max-w-5xl h-screen">
             <div class="flex flex-col gap-2 w-lg">
-                <h1 class="font-bold text-zinc-950 text-3xl md:text-4xl mb-10">Login back<br>to your account</h1>
+                <h1 class="font-bold text-zinc-950 text-3xl md:text-4xl mb-10">Log in back<br>to your account</h1>
                 <form method="POST" action="{{ route('login') }}" class="flex flex-col gap-2"
                     x-data="{ email: '', password: '', loading: false }" @submit="loading = true">
                     @csrf
                     <button
                         class="flex mb-4 flex-row gap-4 justify-center items-center w-full text-lg font-medium p-2 rounded-lg bg-zinc-200 hover:bg-zinc-300 active:scale-98 transition duration-100 cursor-pointer">
                         <img src="{{ asset('assets/google.webp') }}" alt="Google logo" class="size-5">
-                        <span>Login with Google</span>
+                        <span>Log in with Google</span>
                     </button>
                     <div class="flex mb-4 flex-row gap-4 items-center">
                         <span class="w-full h-0.5 bg-zinc-300"></span>
