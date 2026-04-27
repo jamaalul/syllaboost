@@ -29,11 +29,16 @@
                 <form method="POST" action="{{ route('login') }}" class="flex flex-col gap-2"
                     x-data="{ email: '', password: '', loading: false }" @submit="loading = true">
                     @csrf
-                    <button
+                    @if ($errors->any())
+                        <div class="text-red-500 text-sm font-medium">
+                            {{ $errors->first() }}
+                        </div>
+                    @endif
+                    <a href="{{ route('auth.google') }}"
                         class="flex mb-4 flex-row gap-4 justify-center items-center w-full text-lg font-medium p-2 rounded-lg bg-zinc-200 hover:bg-zinc-300 active:scale-98 transition duration-100 cursor-pointer">
                         <img src="{{ asset('assets/google.webp') }}" alt="Google logo" class="size-5">
                         <span>Log in with Google</span>
-                    </button>
+                    </a>
                     <div class="flex mb-4 flex-row gap-4 items-center">
                         <span class="w-full h-0.5 bg-zinc-300"></span>
                         <span class="font-medium text-zinc-500">or</span>
