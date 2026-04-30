@@ -30,6 +30,6 @@ class User extends Authenticatable
     }
 
     public function deck() {
-        $this->hasMany(Deck::class)->orderBy('order');
+        return $this->hasMany(Deck::class)->orderBy('order');
     }
 }
