@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ config('app.name', 'Syllaboost') }}</title>
+    <title>Learn better with Syllaboost</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -81,7 +81,7 @@
             </div>
         </nav>
     </div>
-    <section class="flex flex-col justify-center items-center bg-zinc-50 pt-16 md:pt-0 w-screen md:h-screen bg-cover"
+    <section class="flex flex-col justify-center items-center bg-zinc-50 bg-cover pt-16 md:pt-0 w-screen md:h-screen"
         style="background-image: url('{{ asset('assets/mesh.webp') }}');">
         <div class="flex flex-col justify-center md:items-center mx-auto p-10 md:pt-0 w-full max-w-5xl md:h-screen">
             <div class="bg-sky-200 mb-4 px-3 py-1 rounded-full w-fit">

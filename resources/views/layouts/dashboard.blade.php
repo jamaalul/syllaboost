@@ -84,26 +84,60 @@
                         </path>
                     </svg>
                 </button>
-                <span class="text-black">
-                    <svg class="size-6" width="44" height="44" viewBox="0 0 44 44" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <g clip-path="url(#clip0_29_199)">
-                            <path
-                                d="M7.2132 0.84923C15.4142 9.05024 28.7107 9.05024 36.9117 0.84923L43.2756 7.21319C35.0746 15.4142 35.0746 28.7107 43.2756 36.9117L36.9117 43.2756C29.2982 35.6622 26.6342 24.9751 28.916 15.2089C19.1498 17.4906 8.4627 14.8267 0.849236 7.21319L7.2132 0.84923ZM15.6985 22.0624L22.0624 28.4264L7.2132 43.2756L0.849236 36.9117L15.6985 22.0624Z"
-                                fill="currentColor" />
-                        </g>
-                        <defs>
-                            <clipPath id="clip0_29_199">
-                                <rect width="44" height="44" fill="white" />
-                            </clipPath>
-                        </defs>
-                    </svg>
-                </span>
+                <div class="flex gap-2">
+                    <button x-data="{ loading: false }" @click="loading = true" :disabled="loading"
+                        class="flex justify-center bg-sky-600 disabled:bg-sky-400 px-4 py-2 rounded-full w-30 font-semibold text-white hover:scale-105 active:scale-100 transition-all duration-100 cursor-pointer">
+                        <span x-show="!loading" class="flex gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                            </svg>
+                            <span>Create</span>
+                        </span>
+                        <span x-show="loading">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
+                                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                            </svg>
+                        </span>
+                    </button>
+                    <div class="bg-zinc-100 rounded-full size-10 overflow-hidden">
+                        <img src="{{ asset(auth()->user()->avatar) }}" alt="Avatar" class="w-full h-full">
+                    </div>
+                </div>
             </header>
 
             <!-- Page Content -->
             <div
-                class="flex flex-col flex-1 justify-center md:items-center mr-auto p-4 md:p-8 border w-full max-w-5xl h-fit min-h-screen">
+                class="relative flex flex-col flex-1 mr-auto p-6 md:px-8 md:pt-16 md:pb-8 border w-full max-w-5xl h-fit min-h-screen">
+                <!-- Desktop Header -->
+                <header
+                    class="hidden top-0 left-0 z-10 absolute lg:flex justify-end items-center p-4 w-full max-w-5xl h-16">
+                    <div class="flex gap-2">
+                        <button x-data="{ loading: false }" @click="loading = true" :disabled="loading"
+                            class="flex justify-center bg-sky-600 disabled:bg-sky-400 px-4 py-2 rounded-full w-30 font-semibold text-white hover:scale-105 active:scale-100 transition-all duration-100 cursor-pointer">
+                            <span x-show="!loading" class="flex gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                                <span>Create</span>
+                            </span>
+                            <span x-show="loading">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
+                                    <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                                </svg>
+                            </span>
+                        </button>
+                        <div class="bg-zinc-100 rounded-full size-10 overflow-hidden">
+                            <img src="{{ asset(auth()->user()->avatar) }}" alt="Avatar" class="w-full h-full">
+                        </div>
+                    </div>
+                </header>
                 @yield('main')
             </div>
         </main>

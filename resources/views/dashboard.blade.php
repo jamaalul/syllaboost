@@ -5,7 +5,8 @@
 @endsection
 
 @section('main')
-    <div class="flex flex-col">
+    <div class="flex flex-col border">
 
+        <h1>Dashboard</h1>
     </div>
 @endsection
