@@ -11,5 +11,8 @@
 </head>
 
 <body class="overflow-x-hidden antialiased">
+    <x-toast />
     @yield('content')
 </body>
+
+</html>

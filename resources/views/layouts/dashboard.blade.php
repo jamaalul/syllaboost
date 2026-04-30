@@ -85,9 +85,9 @@
                     </svg>
                 </button>
                 <div class="flex gap-2">
-                    <button x-data="{ loading: false }" @click="loading = true" :disabled="loading"
-                        class="flex justify-center bg-sky-600 disabled:bg-sky-400 px-4 py-2 rounded-full w-30 font-semibold text-white hover:scale-105 active:scale-100 transition-all duration-100 cursor-pointer">
-                        <span x-show="!loading" class="flex gap-1">
+                    <a href="{{ route('decks.create') }}" x-data="{ loading: false }" @click="loading = true"
+                        class="flex justify-center bg-sky-600 px-4 py-2 rounded-full w-30 font-semibold text-white hover:scale-105 active:scale-100 transition-all duration-100 cursor-pointer">
+                        <span class="flex gap-1" x-show="!loading">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="size-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -101,7 +101,7 @@
                                 <path d="M21 12a9 9 0 1 1-6.219-8.56" />
                             </svg>
                         </span>
-                    </button>
+                    </a>
                     <div class="bg-zinc-100 rounded-full size-10 overflow-hidden">
                         <img src="{{ asset(auth()->user()->avatar) }}" alt="Avatar" class="w-full h-full">
                     </div>
@@ -115,9 +115,9 @@
                 <header
                     class="hidden top-0 left-0 z-10 absolute lg:flex justify-end items-center p-4 w-full max-w-5xl h-16">
                     <div class="flex gap-2">
-                        <button x-data="{ loading: false }" @click="loading = true" :disabled="loading"
-                            class="flex justify-center bg-sky-600 disabled:bg-sky-400 px-4 py-2 rounded-full w-30 font-semibold text-white hover:scale-105 active:scale-100 transition-all duration-100 cursor-pointer">
-                            <span x-show="!loading" class="flex gap-1">
+                        <a href="{{ route('decks.create') }}" x-data="{ loading: false }" @click="loading = true"
+                            class="flex justify-center bg-sky-600 px-4 py-2 rounded-full w-30 font-semibold text-white hover:scale-105 active:scale-100 transition-all duration-100 cursor-pointer">
+                            <span class="flex gap-1" x-show="!loading">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                     stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -132,7 +132,7 @@
                                     <path d="M21 12a9 9 0 1 1-6.219-8.56" />
                                 </svg>
                             </span>
-                        </button>
+                        </a>
                         <div class="bg-zinc-100 rounded-full size-10 overflow-hidden">
                             <img src="{{ asset(auth()->user()->avatar) }}" alt="Avatar" class="w-full h-full">
                         </div>
