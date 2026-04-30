@@ -3,7 +3,33 @@
 @section('title', 'Create Deck with JSON \ Syllaboost')
 
 @section('main')
-    <div x-data="{ jsonData: @js(old('json_data', '')), isSubmitting: false, prompt: 'Generate a JSON object for a flashcard deck. Use this format:\n{\n  &quot;name&quot;: &quot;Deck Name&quot;,\n  &quot;description&quot;: &quot;Description&quot;,\n  &quot;is_public&quot;: false,\n  &quot;cards&quot;: [\n    { &quot;front&quot;: &quot;Question&quot;, &quot;back&quot;: &quot;Answer&quot; }\n  ]\n}', copyStatus: 'Copy AI Prompt', copyPrompt() { navigator.clipboard.writeText(this.prompt.replace(/&quot;/g, '&quot;')); this.copyStatus = 'Copied!'; setTimeout(() => { this.copyStatus = 'Copy AI Prompt' }, 2000); } }"
+    @php
+        $aiPrompt = <<<'EOT'
+Generate a flashcard deck in valid JSON format based on the uploaded module or study material. Follow this exact structure:
+
+{
+  "name": "Deck Name",
+  "description": "Description",
+  "is_public": false,
+  "cards": [
+    { "front": "Question", "back": "Answer" }
+  ]
+}
+
+Requirements:
+
+Use the uploaded module as the only source of content.
+Create clear, concise, and study-focused flashcards.
+Each "front" should contain a single question or concept prompt.
+Each "back" should contain a precise, self-contained answer.
+Cover the most important concepts from the material (do not skip key topics).
+Avoid duplicates, filler text, or overly long explanations.
+Keep wording simple and unambiguous.
+Return only valid JSON (no extra text, comments, or formatting outside the JSON).
+EOT;
+    @endphp
+
+    <div x-data="{ jsonData: @js(old('json_data', '')), isSubmitting: false, prompt: @js($aiPrompt), copyStatus: 'Copy AI Prompt', copyPrompt() { navigator.clipboard.writeText(this.prompt); this.copyStatus = 'Copied!'; setTimeout(() => { this.copyStatus = 'Copy AI Prompt' }, 2000); } }"
         class="space-y-8">
         <div class="flex justify-between items-center">
             <div>
