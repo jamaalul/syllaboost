@@ -58,6 +58,40 @@ class DeckController extends Controller
         return redirect()->route('decks.index')->with('success', 'Deck created successfully!');
     }
 
+    public function edit(Deck $deck): View
+    {
+        abort_if($deck->user_id !== auth()->id(), 403);
+
+        $deck->load('cards');
+
+        return view('decks.edit', compact('deck'));
+    }
+
+    public function update(\App\Http\Requests\UpdateDeckRequest $request, Deck $deck): RedirectResponse
+    {
+        abort_if($deck->user_id !== auth()->id(), 403);
+
+        DB::transaction(function () use ($request, $deck) {
+            $deck->update([
+                'name' => $request->name,
+                'description' => $request->description,
+                'is_public' => $request->boolean('is_public'),
+            ]);
+
+            $deck->cards()->delete();
+
+            foreach ($request->cards as $index => $card) {
+                $deck->cards()->create([
+                    'front_content' => $card['front_content'],
+                    'back_content' => $card['back_content'],
+                    'order' => $index,
+                ]);
+            }
+        });
+
+        return redirect()->route('decks.index')->with('success', 'Deck updated successfully!');
+    }
+
     public function createFromJson(): View
     {
         return view('decks.create-json');

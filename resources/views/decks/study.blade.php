@@ -45,17 +45,47 @@
                 <div x-ref="flip-{{ $idx }}" class="border border-zinc-200 w-full h-full card-flip-inner">
 
                     {{-- front face --}}
-                    <div class="p-6 rounded-3xl card-face card-front">
-                        <p class="font-bold text-zinc-950 text-xl">
+                    <div class="relative p-6 rounded-3xl card-face card-front">
+                        <p class="font-bold text-zinc-950 text-2xl">
                             {{ $card->front_content }}
                         </p>
+                        <span class="right-6 bottom-6 absolute text-zinc-200">
+                            <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"
+                                class="size-7">
+                                <g clip-path="url(#clip0_29_199)">
+                                    <path
+                                        d="M7.2132 0.84923C15.4142 9.05024 28.7107 9.05024 36.9117 0.84923L43.2756 7.21319C35.0746 15.4142 35.0746 28.7107 43.2756 36.9117L36.9117 43.2756C29.2982 35.6622 26.6342 24.9751 28.916 15.2089C19.1498 17.4906 8.4627 14.8267 0.849236 7.21319L7.2132 0.84923ZM15.6985 22.0624L22.0624 28.4264L7.2132 43.2756L0.849236 36.9117L15.6985 22.0624Z"
+                                        fill="currentColor" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_29_199">
+                                        <rect width="44" height="44" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </span>
                     </div>
 
                     {{-- back face --}}
-                    <div class="{{ $color }} p-6 rounded-3xl card-face card-back">
-                        <p class="font-bold text-white text-xl">
+                    <div class="{{ $color }} p-6 relative rounded-3xl card-face card-back">
+                        <p class="font-bold text-white text-2xl">
                             {{ $card->back_content }}
                         </p>
+                        <span class="right-6 bottom-6 absolute text-white">
+                            <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"
+                                class="size-7">
+                                <g clip-path="url(#clip0_29_199)">
+                                    <path
+                                        d="M7.2132 0.84923C15.4142 9.05024 28.7107 9.05024 36.9117 0.84923L43.2756 7.21319C35.0746 15.4142 35.0746 28.7107 43.2756 36.9117L36.9117 43.2756C29.2982 35.6622 26.6342 24.9751 28.916 15.2089C19.1498 17.4906 8.4627 14.8267 0.849236 7.21319L7.2132 0.84923ZM15.6985 22.0624L22.0624 28.4264L7.2132 43.2756L0.849236 36.9117L15.6985 22.0624Z"
+                                        fill="currentColor" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_29_199">
+                                        <rect width="44" height="44" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </span>
                     </div>
 
                 </div>
