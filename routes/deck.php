@@ -1,0 +1,12 @@
+<?php
+
+use App\Http\Controllers\DeckController;
+use Illuminate\Support\Facades\Route;
+
+Route::middleware('auth')->prefix('decks')->controller(DeckController::class)->group(function () {
+    Route::get('/', 'index')->name('decks.index');
+    Route::get('/create', 'create')->name('decks.create');
+    Route::get('/create/json', 'createFromJson')->name('decks.create.json');
+    Route::post('/', 'store')->name('decks.store');
+    Route::post('/json', 'storeFromJson')->name('decks.store.json');
+});

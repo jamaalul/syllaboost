@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\OtpController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
@@ -39,3 +40,6 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
 });
+
+Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('auth.google');
+Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('auth.google.callback');

@@ -13,3 +13,28 @@
 
     --font-cursive: "Caveat", cursive;
 }
+
+/* Minimalist Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d4d4d8; /* zinc-300 equivalent */
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a1a1aa; /* zinc-400 equivalent */
+}
+
+/* Firefox support */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #d4d4d8 transparent;
+}

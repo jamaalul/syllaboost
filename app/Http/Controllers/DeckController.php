@@ -12,6 +12,25 @@ use Illuminate\View\View;
 
 class DeckController extends Controller
 {
+    public function index(Request $request): View
+    {
+        $search = $request->query('search');
+
+        $decks = Deck::where('user_id', auth()->id())
+            ->when($search, function ($query, $search) {
+                return $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                        ->orWhere('description', 'like', "%{$search}%");
+                });
+            })
+            ->withCount('cards')
+            ->latest()
+            ->paginate(9)
+            ->withQueryString();
+
+        return view('decks.index', compact('decks'));
+    }
+
     public function create(): View
     {
         return view('decks.create');
@@ -36,7 +55,7 @@ class DeckController extends Controller
             }
         });
 
-        return redirect()->route('dashboard')->with('success', 'Deck created successfully!');
+        return redirect()->route('decks.index')->with('success', 'Deck created successfully!');
     }
 
     public function createFromJson(): View
@@ -50,7 +69,7 @@ class DeckController extends Controller
 
         if (json_last_error() !== JSON_ERROR_NONE) {
             return back()
-                ->withErrors(['json_data' => 'Invalid JSON format: ' . json_last_error_msg()])
+                ->withErrors(['json_data' => 'Invalid JSON format: '.json_last_error_msg()])
                 ->with('error', 'The JSON structure is incorrect. Please check your syntax.')
                 ->withInput();
         }
@@ -88,6 +107,6 @@ class DeckController extends Controller
             }
         });
 
-        return redirect()->route('dashboard')->with('success', 'Deck created successfully from JSON!');
+        return redirect()->route('decks.index')->with('success', 'Deck created successfully from JSON!');
     }
 }
