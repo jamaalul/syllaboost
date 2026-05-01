@@ -99,9 +99,9 @@
                                 </a>
                                 <a href="{{ route('decks.study', $deck->slug) }}" x-data="{ loading: false }"
                                     @click="loading = true"
-                                    class="inline-flex justify-center items-center bg-zinc-950 px-4 py-1.5 rounded-xl w-18 font-bold text-white text-sm hover:scale-105 active:scale-100 transition-all">
+                                    class="inline-flex justify-center items-center bg-zinc-950 px-4 py-1.5 rounded-full w-22 font-bold text-white text-sm hover:scale-105 active:scale-100 transition-all">
                                     <span x-show="!loading">
-                                        Study
+                                        Practice
                                     </span>
                                     <span x-show="loading">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"

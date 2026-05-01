@@ -8,15 +8,20 @@
         tabindex="0">
 
         {{-- stack decoration (ghost layers behind) --}}
-        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl w-[85vw] md:w-80 aspect-2/3 translate-y-4">
+        <div
+            class="z-10 absolute bg-white border border-zinc-200 rounded-3xl w-[80vw] md:w-[50vw] lg:w-80 aspect-2/3 translate-y-4">
         </div>
-        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl w-[85vw] md:w-80 aspect-2/3 translate-y-3">
+        <div
+            class="z-10 absolute bg-white border border-zinc-200 rounded-3xl w-[80vw] md:w-[50vw] lg:w-80 aspect-2/3 translate-y-3">
         </div>
-        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl w-[85vw] md:w-80 aspect-2/3 translate-y-2">
+        <div
+            class="z-10 absolute bg-white border border-zinc-200 rounded-3xl w-[80vw] md:w-[50vw] lg:w-80 aspect-2/3 translate-y-2">
         </div>
-        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl w-[85vw] md:w-80 aspect-2/3 translate-y-1">
+        <div
+            class="z-10 absolute bg-white border border-zinc-200 rounded-3xl w-[80vw] md:w-[50vw] lg:w-80 aspect-2/3 translate-y-1">
         </div>
-        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl w-[85vw] md:w-80 aspect-2/3"></div>
+        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl w-[80vw] md:w-[50vw] lg:w-80 aspect-2/3">
+        </div>
 
         @php
             $colors = [
@@ -33,7 +38,7 @@
         {{-- real cards --}}
         @foreach ($cards as $idx => $card)
             <div x-ref="card-{{ $idx }}" :style="{ zIndex: orderedCards.indexOf({{ $idx }}) + 20 }"
-                class="absolute bg-white border-x border-zinc-200 rounded-3xl w-[85vw] md:w-80 aspect-2/3 card-item"
+                class="absolute bg-white border-x border-zinc-200 rounded-3xl w-[80vw] md:w-[50vw] lg:w-80 aspect-2/3 card-item"
                 style="perspective: 1000px;">
 
                 {{-- inner flip container --}}
@@ -57,20 +62,65 @@
             </div>
         @endforeach
 
-        {{-- hint bar --}}
+        {{-- hint bar: keyboard on desktop, swipe on mobile --}}
         <div class="bottom-8 absolute flex items-center gap-2 text-zinc-500 text-sm select-none">
-            <kbd class="bg-white shadow-sm px-2 py-1 border border-zinc-300 rounded-md font-mono text-xs">←</kbd>
-            <span>Prev</span>
-            <span class="text-zinc-300">|</span>
-            <kbd class="bg-white shadow-sm px-2 py-1 border border-zinc-300 rounded-md font-mono text-xs">→</kbd>
-            <span>Next</span>
-            <span class="text-zinc-300">|</span>
-            <kbd class="bg-white shadow-sm px-2 py-1 border border-zinc-300 rounded-md font-mono text-xs">Space</kbd>
-            <span>Reveal</span>
+            {{-- desktop hints --}}
+            <div x-show="!isTouch" class="hidden md:flex items-center gap-2">
+                <kbd class="bg-white shadow-sm px-2 py-1 border border-zinc-300 rounded-md font-mono text-xs">←</kbd>
+                <span>Prev</span>
+                <span class="text-zinc-300">|</span>
+                <kbd class="bg-white shadow-sm px-2 py-1 border border-zinc-300 rounded-md font-mono text-xs">→</kbd>
+                <span>Next</span>
+                <span class="text-zinc-300">|</span>
+                <kbd class="bg-white shadow-sm px-2 py-1 border border-zinc-300 rounded-md font-mono text-xs">Space</kbd>
+                <span>Reveal</span>
+            </div>
+            {{-- mobile hints --}}
+            <div x-show="isTouch" class="md:hidden flex items-center gap-2">
+                <span class="flex items-center gap-1">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                            <path fill-rule="evenodd"
+                                d="M10 2a.75.75 0 0 1 .75.75v12.59l1.95-2.1a.75.75 0 1 1 1.1 1.02l-3.25 3.5a.75.75 0 0 1-1.1 0l-3.25-3.5a.75.75 0 1 1 1.1-1.02l1.95 2.1V2.75A.75.75 0 0 1 10 2Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </span>
+                    Prev
+                </span>
+                <span class="text-zinc-300">|</span>
+                <span class="flex items-center gap-1">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                            <path fill-rule="evenodd"
+                                d="M10 18a.75.75 0 0 1-.75-.75V4.66L7.3 6.76a.75.75 0 0 1-1.1-1.02l3.25-3.5a.75.75 0 0 1 1.1 0l3.25 3.5a.75.75 0 1 1-1.1 1.02l-1.95-2.1v12.59A.75.75 0 0 1 10 18Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </span>
+                    Next
+                </span>
+                <span class="text-zinc-300">|</span>
+                <span class="flex items-center gap-1">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                            <path
+                                d="M10 1a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 10 1ZM5.05 3.05a.75.75 0 0 1 1.06 0l1.062 1.06A.75.75 0 1 1 6.11 5.173L5.05 4.11a.75.75 0 0 1 0-1.06ZM14.95 3.05a.75.75 0 0 1 0 1.06l-1.06 1.062a.75.75 0 0 1-1.062-1.061l1.061-1.06a.75.75 0 0 1 1.06 0ZM3 8a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5A.75.75 0 0 1 3 8ZM14 8a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5A.75.75 0 0 1 14 8ZM7.172 10.828a.75.75 0 0 1 0 1.061L6.11 12.95a.75.75 0 0 1-1.06-1.06l1.06-1.06a.75.75 0 0 1 1.06 0ZM10.766 7.51a.75.75 0 0 0-1.37.365l-.492 6.861a.75.75 0 0 0 1.204.65l1.043-.799.985 3.678a.75.75 0 0 0 1.45-.388l-.978-3.646 1.292.204a.75.75 0 0 0 .74-1.16l-3.874-5.764Z" />
+                        </svg>
+                    </span>
+                    /
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                            <path fill-rule="evenodd"
+                                d="M13.2 2.24a.75.75 0 0 0 .04 1.06l2.1 1.95H6.75a.75.75 0 0 0 0 1.5h8.59l-2.1 1.95a.75.75 0 1 0 1.02 1.1l3.5-3.25a.75.75 0 0 0 0-1.1l-3.5-3.25a.75.75 0 0 0-1.06.04Zm-6.4 8a.75.75 0 0 0-1.06-.04l-3.5 3.25a.75.75 0 0 0 0 1.1l3.5 3.25a.75.75 0 1 0 1.02-1.1l-2.1-1.95h8.59a.75.75 0 0 0 0-1.5H4.66l2.1-1.95a.75.75 0 0 0 .04-1.06Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </span>
+                    Flip
+                </span>
+            </div>
         </div>
 
-        <div class="top-10 absolute w-full">
-            <div class="flex justify-between mx-auto w-full max-w-5xl">
+        <div class="top-4 md:top-10 absolute w-full">
+            <div class="flex justify-between mx-auto p-4 w-full max-w-5xl">
                 <a href="{{ route('decks.index') }}" x-data="{ loading: false }" @click="loading = true"
                     class="flex justify-center items-center gap-2 w-24 font-medium text-zinc-500 hover:text-zinc-700 transition-colors">
                     <span class="flex justify-center items-center gap-2" x-show="!loading">
@@ -126,7 +176,7 @@
             transform: rotateY(180deg);
         }
 
-        /* ── Slide animations (unchanged) ── */
+        /* ── Slide animations: desktop (X axis) ── */
         .card-item.slide-out-right {
             animation: slide-out-right 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
@@ -192,11 +242,80 @@
                 opacity: 1;
             }
         }
+
+        /* ── Slide animations: mobile (Y axis, inverted direction) ── */
+        .card-item.slide-out-up {
+            animation: slide-out-up 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .card-item.slide-in-down {
+            animation: slide-in-down 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .card-item.rise-up {
+            animation: rise-up 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .card-item.slide-in-up {
+            animation: slide-in-up 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes slide-out-up {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(-120%) rotate(-5deg);
+            }
+        }
+
+        @keyframes slide-in-down {
+            0% {
+                transform: translateY(-120%) rotate(-5deg);
+            }
+
+            100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+                z-index: -10;
+            }
+        }
+
+        @keyframes rise-up {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(-120%) rotate(-5deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slide-in-up {
+            0% {
+                transform: translateY(-120%) rotate(-5deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+        }
     </style>
 
     <script>
         function cardSlider() {
             const DURATION = 300;
+            const SWIPE_THRESHOLD = 50;
+            const isMobile = () => window.matchMedia('(pointer: coarse)').matches;
 
             return {
                 cards: @json(collect($cards)->map(fn($c) => [
@@ -208,6 +327,51 @@
                 topIndex: 0,
                 animating: false,
                 revealed: false,
+                touchStartX: 0,
+                touchStartY: 0,
+                isTouch: window.matchMedia('(pointer: coarse)').matches,
+
+                init() {
+                    this._setupTouch();
+                },
+
+                _setupTouch() {
+                    const el = this.$el;
+
+                    el.addEventListener('touchstart', (e) => {
+                        this.touchStartX = e.touches[0].clientX;
+                        this.touchStartY = e.touches[0].clientY;
+                    }, { passive: true });
+
+                    el.addEventListener('touchend', (e) => {
+                        if (!isMobile()) return;
+
+                        const dx = e.changedTouches[0].clientX - this.touchStartX;
+                        const dy = e.changedTouches[0].clientY - this.touchStartY;
+                        const absDx = Math.abs(dx);
+                        const absDy = Math.abs(dy);
+
+                        // Tap (no significant movement) → reveal
+                        if (absDx < SWIPE_THRESHOLD && absDy < SWIPE_THRESHOLD) {
+                            this.reveal();
+                            return;
+                        }
+
+                        if (absDx > absDy) {
+                            // Horizontal swipe → flip
+                            if (Math.abs(dx) > SWIPE_THRESHOLD) {
+                                this.reveal();
+                            }
+                        } else {
+                            // Vertical swipe
+                            if (dy < -SWIPE_THRESHOLD) {
+                                this.next();
+                            } else if (dy > SWIPE_THRESHOLD) {
+                                this.prev();
+                            }
+                        }
+                    }, { passive: true });
+                },
 
                 get orderedCards() {
                     return Array.from({ length: this.total }, (_, i) =>
@@ -239,19 +403,20 @@
                     this.animating = true;
 
                     const card = this.$refs['card-' + this.topIndex];
+                    const mobile = isMobile();
                     this._resetFlip(this.topIndex);
 
                     card.style.zIndex = '9999';
-                    card.classList.add('slide-out-right');
+                    card.classList.add(mobile ? 'slide-out-up' : 'slide-out-right');
 
                     setTimeout(() => {
-                        card.classList.remove('slide-out-right');
-                        card.classList.add('slide-in-left');
+                        card.classList.remove(mobile ? 'slide-out-up' : 'slide-out-right');
+                        card.classList.add(mobile ? 'slide-in-down' : 'slide-in-left');
 
                         this.topIndex = (this.topIndex + 1) % this.total;
 
                         setTimeout(() => {
-                            card.classList.remove('slide-in-left');
+                            card.classList.remove(mobile ? 'slide-in-down' : 'slide-in-left');
                             card.style.zIndex = '';
                             this.animating = false;
                         }, DURATION);
@@ -264,23 +429,24 @@
 
                     const prevIndex = (this.topIndex - 1 + this.total) % this.total;
                     const card = this.$refs['card-' + prevIndex];
+                    const mobile = isMobile();
 
                     this._resetFlip(this.topIndex);
 
                     card.style.opacity = '0';
-                    card.style.transform = 'translateX(-120%)';
+                    card.style.transform = mobile ? 'translateY(120%)' : 'translateX(-120%)';
                     card.style.zIndex = '9999';
 
                     requestAnimationFrame(() => {
                         requestAnimationFrame(() => {
-                            card.classList.add('rise-right');
+                            card.classList.add(mobile ? 'rise-up' : 'rise-right');
 
                             setTimeout(() => {
-                                card.classList.remove('rise-right');
-                                card.classList.add('slide-in-right');
+                                card.classList.remove(mobile ? 'rise-up' : 'rise-right');
+                                card.classList.add(mobile ? 'slide-in-up' : 'slide-in-right');
 
                                 setTimeout(() => {
-                                    card.classList.remove('slide-in-right');
+                                    card.classList.remove(mobile ? 'slide-in-up' : 'slide-in-right');
                                     card.style.opacity = '';
                                     card.style.transform = '';
                                     card.style.zIndex = '';
