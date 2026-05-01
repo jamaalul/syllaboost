@@ -97,7 +97,8 @@
                                         </path>
                                     </svg>
                                 </a>
-                                <a href="#" x-data="{ loading: false }" @click="loading = true"
+                                <a href="{{ route('decks.study', $deck->slug) }}" x-data="{ loading: false }"
+                                    @click="loading = true"
                                     class="inline-flex justify-center items-center bg-zinc-950 px-4 py-1.5 rounded-xl w-18 font-bold text-white text-sm hover:scale-105 active:scale-100 transition-all">
                                     <span x-show="!loading">
                                         Study

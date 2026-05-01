@@ -9,4 +9,6 @@ Route::middleware('auth')->prefix('decks')->controller(DeckController::class)->g
     Route::get('/create/json', 'createFromJson')->name('decks.create.json');
     Route::post('/', 'store')->name('decks.store');
     Route::post('/json', 'storeFromJson')->name('decks.store.json');
+
+    Route::get('{deck:slug}/study', 'study')->name('decks.study');
 });

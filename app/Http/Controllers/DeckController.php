@@ -109,4 +109,14 @@ class DeckController extends Controller
 
         return redirect()->route('decks.index')->with('success', 'Deck created successfully from JSON!');
     }
+
+    public function study(Deck $deck): View {
+        if ($deck->user_id !== auth()->id() && ! $deck->is_public) {
+            abort(404);
+        }
+
+        $cards = $deck->cards()->orderBy('order')->select('front_content', 'back_content', 'order')->get();
+
+        return view('decks.study', compact('deck', 'cards'));
+    }
 }
