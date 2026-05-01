@@ -39,7 +39,7 @@ class DeckJsonCreationTest extends TestCase
             'json_data' => $jsonData,
         ]);
 
-        $response->assertRedirect(route('dashboard'));
+        $response->assertRedirect(route('decks.index'));
         $this->assertDatabaseHas('decks', [
             'name' => 'JSON Deck',
             'description' => 'Created via JSON',

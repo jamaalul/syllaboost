@@ -8,7 +8,28 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="overflow-x-hidden antialiased">
+<body
+    x-data="{ loading: true }"
+    x-init="$nextTick(() => { window.addEventListener('load', () => { setTimeout(() => { loading = false }, 300) }) })"
+    class="overflow-x-hidden antialiased">
+
+    {{-- Loading Screen --}}
+    <div
+        x-show="loading"
+        x-transition:leave="transition ease-in-out duration-700"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white"
+        aria-label="Loading Syllaboost"
+        role="status">
+        <div class="flex flex-col items-center gap-6">
+            <img
+                src="{{ asset('assets/logo.webp') }}"
+                alt="Syllaboost"
+                class="h-8 w-auto opacity-90">
+            <span class="block h-1 w-1 rounded-full bg-zinc-400 animate-ping"></span>
+        </div>
+    </div>
     <div class="top-0 left-0 z-10 fixed flex justify-center items-center md:px-4 w-screen h-16 md:h-24">
         <nav class="flex bg-white shadow-sm md:mx-4 p-2 md:p-1 md:rounded-full w-full max-w-5xl h-16 md:h-12">
             <img src="{{ asset('assets/logo.webp') }}" alt="Syllaboost Logo" class="px-4 py-2 h-full">

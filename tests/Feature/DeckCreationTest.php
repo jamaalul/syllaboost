@@ -35,7 +35,7 @@ class DeckCreationTest extends TestCase
             ],
         ]);
 
-        $response->assertRedirect(route('dashboard'));
+        $response->assertRedirect(route('decks.index'));
         $this->assertDatabaseHas('decks', [
             'user_id' => $user->id,
             'name' => 'Spanish Vocabulary',

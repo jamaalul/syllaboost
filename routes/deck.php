@@ -11,4 +11,5 @@ Route::middleware('auth')->prefix('decks')->controller(DeckController::class)->g
     Route::post('/json', 'storeFromJson')->name('decks.store.json');
 
     Route::get('{deck:slug}/study', 'study')->name('decks.study');
+    Route::delete('{deck:slug}', 'destroy')->name('decks.destroy');
 });
