@@ -3,7 +3,7 @@
 @section('title', $deck->name . ' \ Syllaboost')
 
 @section('content')
-    <div class="relative flex justify-center items-center bg-zinc-100 w-screen h-screen" x-data="cardSlider()"
+    <div class="relative flex justify-center items-center bg-zinc-100 w-screen h-svh" x-data="cardSlider()"
         @keydown.arrow-right.window="next()" @keydown.arrow-left.window="prev()" @keydown.space.window.prevent="reveal()"
         tabindex="0">
 
@@ -367,11 +367,35 @@
 
                 _setupTouch() {
                     const el = this.$el;
+                    let startX = 0;
+                    let startY = 0;
+                    let intentLocked = null; // 'vertical' | 'horizontal' | null
 
                     el.addEventListener('touchstart', (e) => {
-                        this.touchStartX = e.touches[0].clientX;
-                        this.touchStartY = e.touches[0].clientY;
+                        startX = e.touches[0].clientX;
+                        startY = e.touches[0].clientY;
+                        intentLocked = null;
+                        this.touchStartX = startX;
+                        this.touchStartY = startY;
                     }, { passive: true });
+
+                    // Non-passive so we can preventDefault on vertical swipes
+                    el.addEventListener('touchmove', (e) => {
+                        if (!isMobile()) return;
+
+                        const dx = e.touches[0].clientX - startX;
+                        const dy = e.touches[0].clientY - startY;
+
+                        if (!intentLocked) {
+                            if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
+                                intentLocked = Math.abs(dy) > Math.abs(dx) ? 'vertical' : 'horizontal';
+                            }
+                        }
+
+                        if (intentLocked === 'vertical') {
+                            e.preventDefault(); // stops scroll + pull-to-refresh
+                        }
+                    }, { passive: false });
 
                     el.addEventListener('touchend', (e) => {
                         if (!isMobile()) return;
@@ -381,24 +405,17 @@
                         const absDx = Math.abs(dx);
                         const absDy = Math.abs(dy);
 
-                        // Tap (no significant movement) → reveal
+                        // Tap → reveal
                         if (absDx < SWIPE_THRESHOLD && absDy < SWIPE_THRESHOLD) {
                             this.reveal();
                             return;
                         }
 
-                        if (absDx > absDy) {
-                            // Horizontal swipe → flip
-                            if (Math.abs(dx) > SWIPE_THRESHOLD) {
-                                this.reveal();
-                            }
-                        } else {
-                            // Vertical swipe
-                            if (dy < -SWIPE_THRESHOLD) {
-                                this.next();
-                            } else if (dy > SWIPE_THRESHOLD) {
-                                this.prev();
-                            }
+                        if (intentLocked === 'horizontal') {
+                            if (absDx > SWIPE_THRESHOLD) this.reveal();
+                        } else if (intentLocked === 'vertical') {
+                            if (dy < -SWIPE_THRESHOLD) this.next();
+                            else if (dy > SWIPE_THRESHOLD) this.prev();
                         }
                     }, { passive: true });
                 },
