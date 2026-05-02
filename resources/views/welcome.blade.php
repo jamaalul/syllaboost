@@ -8,26 +8,18 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body
-    x-data="{ loading: true }"
+<body x-data="{ loading: true }"
     x-init="$nextTick(() => { window.addEventListener('load', () => { setTimeout(() => { loading = false }, 300) }) })"
     class="overflow-x-hidden antialiased">
 
     {{-- Loading Screen --}}
-    <div
-        x-show="loading"
-        x-transition:leave="transition ease-in-out duration-700"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-        class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white"
-        aria-label="Loading Syllaboost"
-        role="status">
+    <div x-show="loading" x-transition:leave="transition ease-in-out duration-700"
+        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+        class="z-[9999] fixed inset-0 flex flex-col justify-center items-center bg-white"
+        aria-label="Loading Syllaboost" role="status">
         <div class="flex flex-col items-center gap-6">
-            <img
-                src="{{ asset('assets/logo.webp') }}"
-                alt="Syllaboost"
-                class="h-8 w-auto opacity-90">
-            <span class="block h-1 w-1 rounded-full bg-zinc-400 animate-ping"></span>
+            <img src="{{ asset('assets/logo.webp') }}" alt="Syllaboost" class="opacity-90 w-auto h-8">
+            <span class="block bg-zinc-400 rounded-full w-1 h-1 animate-ping"></span>
         </div>
     </div>
     <div class="top-0 left-0 z-10 fixed flex justify-center items-center md:px-4 w-screen h-16 md:h-24">
@@ -204,7 +196,8 @@
                 </div>
                 <p class="font-semibold text-zinc-950 text-lg md:text-4xl text-center text-balance">"Syllaboost help me
                     study so much. It prepares everything for me and all I need to do is just study."</p>
-                <p class="font-cursive text-zinc-500 text-xl md:text-2xl">Vania Winola, Content creator & student</p>
+                <p class="font-cursive text-zinc-500 text-xl md:text-2xl text-center">Some Student, Content creator &
+                    student</p>
             </div>
         </div>
     </section>
