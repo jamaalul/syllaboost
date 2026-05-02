@@ -400,8 +400,6 @@
 
                 setTimeout(() => {
                     curEl.classList.remove(outCls);
-                    // Drop below ghost layers (z-index 10-14) so it animates
-                    // behind the deck — card-going-to-back-of-deck effect.
                     curEl.style.zIndex = '5';
                     curEl.classList.add(inCls);
 
@@ -409,14 +407,12 @@
                         curEl.classList.remove(inCls);
                         curEl.style.zIndex = '';
 
-                        // Rotate roles left: [prev, cur, next] → [cur, next, prev]
+                        // Rotate left: [p,c,n] → [c,n,p]
                         roles = [roles[1], roles[2], roles[0]];
-
-                        // Advance data pointer
                         topIndex = wrap(topIndex + 1);
 
-                        // roles[0] is the old current node — off-screen. Write new PREV into it.
-                        writeCard(roles[0], topIndex - 1);
+                        // Recycled node is now roles[2] — the new NEXT slot
+                        writeCard(roles[2], topIndex + 1);
 
                         applyZIndices();
                         updateCounter();
@@ -428,9 +424,9 @@
             // ── prev() ────────────────────────────────────────────────────────────
             // The PREV node is already rendered but hidden behind CURRENT.
             // Rotate roles right first so the old PREV node becomes CURRENT,
-            // then animate it sliding in from the left/bottom.
-            // After it lands, silently write new NEXT content into the node
-            // now in the NEXT role (the old CURRENT, which is behind/under).
+            // then animate it sliding in.
+            // Silently write new PREV content into the recycled node
+            // now in the PREV role (the old NEXT, which is behind/under).
             function prev() {
                 if (animating || TOTAL < 2) return;
                 animating = true;
@@ -440,28 +436,20 @@
                 const riseCls = mobile ? 'rise-up' : 'rise-right';
                 const slideInCls = mobile ? 'slide-in-up' : 'slide-in-right';
 
-                // Rotate roles right: [prev, cur, next] → [next, prev, cur]
-                // Old PREV becomes new CURRENT; old CURRENT becomes new NEXT.
+                // Rotate right: [p,c,n] → [n,p,c]
                 roles = [roles[2], roles[0], roles[1]];
-
-                // Move data pointer back
                 topIndex = wrap(topIndex - 1);
 
-                // roles[0] is now the old NEXT node (off-screen). Write new PREV into it.
+                // Recycled node is now roles[0] — the new PREV slot
                 writeCard(roles[0], topIndex - 1);
 
-                // The node now in CURRENT role already has the correct content —
-                // it was PREV and was preloaded. Animate it in.
                 const inEl = nodeForRole(1);
-                // Start below ghost layers so it rises from behind the deck.
                 inEl.style.zIndex = '5';
                 inEl.classList.add(riseCls);
-
-                applyZIndices(); // sets others; inEl overrides with 5 above
+                applyZIndices();
 
                 setTimeout(() => {
                     inEl.classList.remove(riseCls);
-                    // Now promote above everything to slide into the top position.
                     inEl.style.zIndex = '9999';
                     inEl.classList.add(slideInCls);
 
