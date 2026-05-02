@@ -8,20 +8,7 @@
         tabindex="0">
 
         {{-- stack decoration (ghost layers behind) --}}
-        <div
-            class="z-10 absolute bg-white border border-zinc-200 rounded-3xl w-[80vw] md:w-[50vw] lg:w-80 aspect-2/3 translate-y-4">
-        </div>
-        <div
-            class="z-10 absolute bg-white border border-zinc-200 rounded-3xl w-[80vw] md:w-[50vw] lg:w-80 aspect-2/3 translate-y-3">
-        </div>
-        <div
-            class="z-10 absolute bg-white border border-zinc-200 rounded-3xl w-[80vw] md:w-[50vw] lg:w-80 aspect-2/3 translate-y-2">
-        </div>
-        <div
-            class="z-10 absolute bg-white border border-zinc-200 rounded-3xl w-[80vw] md:w-[50vw] lg:w-80 aspect-2/3 translate-y-1">
-        </div>
-        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl w-[80vw] md:w-[50vw] lg:w-80 aspect-2/3">
-        </div>
+        <div class="card-stack-ghost"></div>
 
         @php
             $colors = [
@@ -175,8 +162,50 @@
     </div>
 
     <style>
+        .card-stack-ghost {
+            position: absolute;
+            z-index: 10;
+            width: 80vw;
+            border-radius: 1.5rem;
+            aspect-ratio: 2/3;
+            background: white;
+            border: 1px solid #e4e4e7;
+            translate: 0 8px;
+        }
+
+        .card-stack-ghost::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: white;
+            border: 1px solid #e4e4e7;
+            border-radius: 1.5rem;
+            translate: 0 -4px;
+        }
+
+        @media (min-width: 768px) {
+            .card-stack-ghost {
+                width: 50vw;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .card-stack-ghost {
+                width: 20rem;
+            }
+        }
+
         .card-item {
-            will-change: transform, opacity;
+            /* Remove will-change here — applied dynamically only during animation */
+        }
+
+        .card-item.is-animating {
+            will-change: transform;
+        }
+
+        .card-face {
+            transform: translate3d(0, 0, 0);
+            /* promote faces to own layer */
         }
 
         /* ── Flip structure ── */
@@ -435,51 +464,49 @@
 
                 _resetFlip(index) {
                     const flipEl = this.$refs['flip-' + index];
-                    if (flipEl) {
-                        flipEl.style.transition = 'none';
-                        flipEl.classList.remove('is-flipped');
-                        // force reflow, then restore transition
-                        flipEl.offsetHeight;
+                    if (!flipEl || !flipEl.classList.contains('is-flipped')) return;
+                    flipEl.style.transition = 'none';
+                    flipEl.classList.remove('is-flipped');
+                    requestAnimationFrame(() => {
                         flipEl.style.transition = '';
-                    }
+                    });
                     this.revealed = false;
                 },
 
                 next() {
                     if (this.animating || this.total < 2) return;
                     this.animating = true;
-
                     const card = this.$refs['card-' + this.topIndex];
                     const mobile = isMobile();
                     this._resetFlip(this.topIndex);
 
+                    card.classList.add('is-animating');
                     card.style.zIndex = '9999';
                     card.classList.add(mobile ? 'slide-out-up' : 'slide-out-right');
 
                     setTimeout(() => {
                         card.classList.remove(mobile ? 'slide-out-up' : 'slide-out-right');
                         card.classList.add(mobile ? 'slide-in-down' : 'slide-in-left');
-
                         this.topIndex = (this.topIndex + 1) % this.total;
 
                         setTimeout(() => {
-                            card.classList.remove(mobile ? 'slide-in-down' : 'slide-in-left');
+                            card.classList.remove(mobile ? 'slide-in-down' : 'slide-in-left', 'is-animating');
                             card.style.zIndex = '';
                             this.animating = false;
                         }, DURATION);
                     }, DURATION);
                 },
 
+
                 prev() {
                     if (this.animating || this.total < 2) return;
                     this.animating = true;
-
                     const prevIndex = (this.topIndex - 1 + this.total) % this.total;
                     const card = this.$refs['card-' + prevIndex];
                     const mobile = isMobile();
-
                     this._resetFlip(this.topIndex);
 
+                    card.classList.add('is-animating');
                     card.style.opacity = '0';
                     card.style.transform = mobile ? 'translateY(120%)' : 'translateX(-120%)';
                     card.style.zIndex = '9999';
@@ -493,18 +520,17 @@
                                 card.classList.add(mobile ? 'slide-in-up' : 'slide-in-right');
 
                                 setTimeout(() => {
-                                    card.classList.remove(mobile ? 'slide-in-up' : 'slide-in-right');
+                                    card.classList.remove(mobile ? 'slide-in-up' : 'slide-in-right', 'is-animating');
                                     card.style.opacity = '';
                                     card.style.transform = '';
                                     card.style.zIndex = '';
-
                                     this.topIndex = prevIndex;
                                     this.animating = false;
                                 }, DURATION);
                             }, DURATION);
                         });
                     });
-                }
+                },
             };
         }
     </script>
