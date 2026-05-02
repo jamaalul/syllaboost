@@ -3,7 +3,7 @@
 @section('title', $deck->name . ' \ Syllaboost')
 
 @section('content')
-    <div class="relative flex justify-center items-center bg-zinc-100 w-screen h-svh" x-data="cardSlider()"
+    <div class="relative flex justify-center items-center bg-zinc-100 w-screen h-dvh" x-data="cardSlider()"
         @keydown.arrow-right.window="next()" @keydown.arrow-left.window="prev()" @keydown.space.window.prevent="reveal()"
         tabindex="0">
 
