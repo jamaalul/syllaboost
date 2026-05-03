@@ -40,7 +40,7 @@ class FolderController extends Controller
 
         $userDecks = auth()->user()->decks()->whereDoesntHave('folders', function ($query) use ($folder) {
             $query->where('folder_id', $folder->id);
-        })->get();
+        })->paginate(10, ['*'], 'user_decks_page')->withQueryString();
 
         $tags = $folder->tags()->get();
 
@@ -75,16 +75,17 @@ class FolderController extends Controller
         abort_if($folder->user_id !== auth()->id(), 403);
 
         $validated = $request->validate([
-            'deck_id' => ['required', 'exists:decks,id'],
+            'deck_ids' => ['required', 'array'],
+            'deck_ids.*' => ['exists:decks,id'],
         ]);
 
-        $deck = Deck::findOrFail($validated['deck_id']);
+        $validDeckIds = Deck::whereIn('id', $validated['deck_ids'])
+            ->where('user_id', auth()->id())
+            ->pluck('id');
 
-        abort_if($deck->user_id !== auth()->id(), 403);
+        $folder->decks()->syncWithoutDetaching($validDeckIds);
 
-        $folder->decks()->attach($deck->id);
-
-        return back()->with('success', 'Deck added to folder!');
+        return back()->with('success', 'Decks added to folder!');
     }
 
     public function removeDeck(Folder $folder, Deck $deck)

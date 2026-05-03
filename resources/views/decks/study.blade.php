@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.feature')
 
 @section('title', $deck->name . ' \ Syllaboost')
 
@@ -72,7 +72,7 @@
         {{-- top bar: back link + counter --}}
         <div class="top-4 md:top-10 absolute w-full">
             <div class="flex justify-between mx-auto p-4 w-full max-w-5xl">
-                <a href="{{ route('decks.index') }}" id="back-link"
+                <a href="{{ route('decks.index') }}"
                     class="flex justify-center items-center gap-2 w-24 font-medium text-zinc-500 hover:text-zinc-700 transition-colors">
                     <span id="back-label" class="flex justify-center items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -80,13 +80,6 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                         </svg>
                         Back
-                    </span>
-                    <span id="back-spinner" class="hidden">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="animate-spin">
-                            <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                        </svg>
                     </span>
                 </a>
                 <span id="card-counter" class="font-medium tabular-nums text-zinc-500 text-sm"></span>
@@ -515,12 +508,6 @@
             document.getElementById('hint-desktop').classList.toggle('hidden', isTouch);
             const hintMobile = document.getElementById('hint-mobile');
             if (isTouch) hintMobile.classList.replace('hidden', 'flex');
-
-            // ── Back button loading state ─────────────────────────────────────────
-            document.getElementById('back-link').addEventListener('click', () => {
-                document.getElementById('back-label').classList.add('hidden');
-                document.getElementById('back-spinner').classList.remove('hidden');
-            });
 
             // ── Go ────────────────────────────────────────────────────────────────
             boot();

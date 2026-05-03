@@ -90,14 +90,13 @@
                                 <span class="font-semibold text-sm">{{ $deck->cards_count }} cards</span>
                             </div>
                             <div class="flex">
-                                <button type="button"
-                                    @click="$dispatch('confirm-action', { 
-                                        action: '{{ route('decks.destroy', $deck->slug) }}', 
-                                        method: 'DELETE',
-                                        title: 'Delete this deck?',
-                                        description: 'This action cannot be undone. The deck and all its cards will be permanently removed.',
-                                        confirmText: 'Delete'
-                                    })"
+                                <button type="button" @click="$dispatch('confirm-action', { 
+                                                                action: '{{ route('decks.destroy', $deck->slug) }}', 
+                                                                method: 'DELETE',
+                                                                title: 'Delete this deck?',
+                                                                description: 'This action cannot be undone. The deck and all its cards will be permanently removed.',
+                                                                confirmText: 'Delete'
+                                                            })"
                                     class="p-2 text-zinc-400 hover:text-rose-500 transition-colors cursor-pointer"
                                     title="Delete Deck">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -105,27 +104,17 @@
                                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
                                 </button>
-                                <a href="{{ route('decks.edit', $deck->slug) }}" class="p-2 text-zinc-400 hover:text-zinc-600 transition-colors" title="Edit Deck">
+                                <a href="{{ route('decks.edit', $deck->slug) }}"
+                                    class="p-2 text-zinc-400 hover:text-zinc-600 transition-colors" title="Edit Deck">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
                                         </path>
                                     </svg>
                                 </a>
-                                <a href="{{ route('decks.study', $deck->slug) }}" x-data="{ loading: false }"
-                                    @click="loading = true"
+                                <a href="{{ route('decks.study', $deck->slug) }}"
                                     class="inline-flex justify-center items-center bg-zinc-950 px-4 py-1.5 rounded-full w-22 font-bold text-white text-sm hover:scale-105 active:scale-100 transition-all">
-                                    <span x-show="!loading">
-                                        Practice
-                                    </span>
-                                    <span x-show="loading">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
-                                            <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                                        </svg>
-                                    </span>
+                                    Practice
                                 </a>
                             </div>
                         </div>

@@ -41,9 +41,9 @@
 
             <!-- Navigation Links -->
             <nav class="flex-1 space-y-2 px-4 py-4 overflow-y-auto">
-                <a href="{{ route('dashboard') }}" x-data="{ loading: false }" @click="loading = true"
+                <a href="{{ route('dashboard') }}"
                     class="group flex items-center px-4 py-2.5 rounded-lg w-full font-medium transition-colors {{ request()->routeIs('dashboard') ? 'bg-sky-100 text-sky-500' : 'text-zinc-500 hover:bg-zinc-200' }}">
-                    <span x-show="!loading" class="flex justify-center">
+                    <span class="flex justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="mr-2 size-5">
                             <path
                                 d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
@@ -52,29 +52,15 @@
                         </svg>
                         Dashboard
                     </span>
-                    <span x-show="loading" class="flex justify-center w-full">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
-                            <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                        </svg>
-                    </span>
                 </a>
-                <a href="{{ route('decks.index') }}" x-data="{ loading: false }" @click="loading = true"
+                <a href="{{ route('decks.index') }}"
                     class="group flex items-center w-full px-4 py-2.5 rounded-lg font-medium transition-colors {{ request()->routeIs('decks.*') ? 'bg-sky-100 text-sky-500' : 'text-zinc-500 hover:bg-zinc-200' }}">
-                    <span x-show="!loading" class="flex justify-center">
+                    <span class="flex justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="mr-2 size-5">
                             <path d="M16.5 6a3 3 0 0 0-3-3H6a3 3 0 0 0-3 3v7.5a3 3 0 0 0 3 3v-6A4.5 4.5 0 0 1 10.5 6h6Z" />
                             <path d="M18 7.5a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3h-7.5a3 3 0 0 1-3-3v-7.5a3 3 0 0 1 3-3H18Z" />
                         </svg>
                         Your Decks
-                    </span>
-                    <span x-show="loading" class="flex justify-center w-full">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
-                            <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                        </svg>
                     </span>
                 </a>
                 <span class="flex my-6 border-zinc-200 border-t"></span>
@@ -91,22 +77,15 @@
                         ];
                         $color = $colors[$folder->id % count($colors)];
                     @endphp
-                    <a href="{{ route('folders.show', $folder->slug) }}" x-data="{ loading: false }" @click="loading = true"
+                    <a href="{{ route('folders.show', $folder->slug) }}"
                         class="group flex items-center w-full px-4 py-2.5 rounded-lg font-medium transition-colors {{ request()->routeIs('folders.show') && request()->route('folder')->slug === $folder->slug ? $color['bg'] . ' ' . $color['text'] : 'text-zinc-500 hover:bg-zinc-200' }}">
-                        <span x-show="!loading" class="flex justify-center">
+                        <span class="flex justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="{{ $color['text'] }} mr-2 size-5">
                                 <path
                                     d="M19.5 21a3 3 0 0 0 3-3v-4.5a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3V18a3 3 0 0 0 3 3h15ZM1.5 10.146V6a3 3 0 0 1 3-3h5.379a2.25 2.25 0 0 1 1.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 0 1 3 3v1.146A4.483 4.483 0 0 0 19.5 9h-15a4.483 4.483 0 0 0-3 1.146Z" />
                             </svg>
                             {{ str($folder->name)->limit(17) }}
-                        </span>
-                        <span x-show="loading" class="flex justify-center w-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
-                                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                            </svg>
                         </span>
                     </a>
                 @endforeach
@@ -156,21 +135,14 @@
                     </svg>
                 </button>
                 <div class="flex gap-2">
-                    <a href="{{ route('decks.create') }}" x-data="{ loading: false }" @click="loading = true"
+                    <a href="{{ route('decks.create') }}"
                         class="flex justify-center bg-sky-600 px-4 py-2 rounded-full w-30 font-semibold text-white hover:scale-105 active:scale-100 transition-all duration-100 cursor-pointer">
-                        <span class="flex gap-1" x-show="!loading">
+                        <span class="flex gap-1">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="size-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
                             <span>Create</span>
-                        </span>
-                        <span x-show="loading">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
-                                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                            </svg>
                         </span>
                     </a>
                     <div class="bg-zinc-100 rounded-full size-10 overflow-hidden">
@@ -186,22 +158,14 @@
                 <header
                     class="hidden top-0 z-10 fixed lg:flex justify-end items-center -ml-6 md:-ml-8 p-4 w-full max-w-5xl h-16">
                     <div class="flex gap-2">
-                        <a href="{{ route('decks.create') }}" x-data="{ loading: false }" @click="loading = true"
+                        <a href="{{ route('decks.create') }}"
                             class="flex justify-center bg-sky-600 px-4 py-2 rounded-full w-30 font-semibold text-white hover:scale-105 active:scale-100 transition-all duration-100 cursor-pointer">
-                            <span class="flex gap-1" x-show="!loading">
+                            <span class="flex gap-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                     stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                 </svg>
                                 <span>Create</span>
-                            </span>
-                            <span x-show="loading">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
-                                    <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                                </svg>
                             </span>
                         </a>
                         <div class="bg-zinc-100 rounded-full size-10 overflow-hidden">

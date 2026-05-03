@@ -26,30 +26,14 @@
         <nav class="flex bg-white shadow-sm md:mx-4 p-2 md:p-1 md:rounded-full w-full max-w-5xl h-16 md:h-12">
             <img src="{{ asset('assets/logo.webp') }}" alt="Syllaboost Logo" class="px-4 py-2 h-full">
             <div class="hidden md:flex ml-auto h-full">
-                <button x-data="{ loading: false }"
-                    @click="loading = true; window.location.href = '{{ route('login') }}'" :disabled="loading"
+                <a href="{{ route('login') }}"
                     class="flex justify-center items-center bg-none px-5 rounded-full w-24 h-full font-medium text-zinc-950 active:scale-98 transition duration-100 cursor-pointer disabled:cursor-not-allowed">
-                    <span x-show="!loading">Log in</span>
-                    <span x-show="loading">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
-                            <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                        </svg>
-                    </span>
-                </button>
-                <button x-data="{ loading: false }"
-                    @click="loading = true; window.location.href = '{{ route('register') }}'" :disabled="loading"
+                    Log in
+                </a>
+                <a href="{{ route('register') }}"
                     class="flex justify-center items-center bg-zinc-900 disabled:bg-zinc-700 px-5 rounded-full w-40 h-full font-medium text-white active:scale-98 transition duration-100 cursor-pointer disabled:cursor-not-allowed">
-                    <span x-show="!loading">Sign up for free</span>
-                    <span x-show="loading">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
-                            <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                        </svg>
-                    </span>
-                </button>
+                    Sign up for free
+                </a>
             </div>
             <div x-data="{ open: false }"
                 class="md:hidden relative flex flex-col justify-start items-end ml-auto px-1 h-full">
@@ -64,32 +48,14 @@
                 </button>
                 <div class="top-16 right-4 z-20 fixed flex flex-col gap-2 bg-white shadow-sm p-1 rounded-3xl w-fit h-fit"
                     x-show="open" @click.outside="open = false">
-                    <button x-data="{ loading: false }"
-                        @click="loading = true; window.location.href = '{{ route('login') }}'" :disabled="loading"
+                    <a href='{{ route('login') }}'
                         class="flex justify-center items-center bg-none px-4 py-2 rounded-full w-32 text-zinc-950 active:scale-98 transition duration-100 cursor-pointer disabled:cursor-not-allowed">
-                        <span x-show="!loading">Log in</span>
-                        <span x-show="loading">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
-                                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                            </svg>
-                        </span>
-                    </button>
-                    <button x-data="{ loading: false }"
-                        @click="loading = true; window.location.href = '{{ route('register') }}'" :disabled="loading"
+                        Log in
+                    </a>
+                    <a href='{{ route('register') }}'
                         class="flex justify-center items-center bg-zinc-950 disabled:bg-zinc-700 px-4 py-2 rounded-full w-32 text-white active:scale-98 transition duration-100 cursor-pointer disabled:cursor-not-allowed">
-                        <span x-show="!loading">Sign up</span>
-                        <span x-show="loading">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
-                                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                            </svg>
-                        </span>
-                    </button>
+                        Sign up
+                    </a>
                 </div>
             </div>
         </nav>
@@ -106,18 +72,10 @@
                 <p class="mt-10 max-w-2xl text-zinc-500 text-lg md:text-center">Start learning in the most effective way
                     with flashcards, spaced repetitions, and custom quizzes to achieve your academic goals.</p>
             </div>
-            <button x-data="{ loading: false }"
-                @click="loading = true; window.location.href = '{{ route('register') }}'" :disabled="loading"
+            <a href='{{ route('register') }}'
                 class="flex justify-center items-center bg-zinc-900 disabled:bg-zinc-700 mt-8 px-4 py-2 rounded-full w-full md:w-32 font-medium text-white hover:scale-105 active:scale-100 transition duration-100 cursor-pointer disabled:cursor-not-allowed">
-                <span x-show="!loading">Get Started</span>
-                <span x-show="loading">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
-                        <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                    </svg>
-                </span>
-            </button>
+                Get Started
+            </a>
             <div class="flex flex-wrap justify-center gap-6 md:gap-12 mt-12">
                 <div class="flex justify-center items-center gap-2 text-yellow-500">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"

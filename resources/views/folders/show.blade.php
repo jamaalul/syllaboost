@@ -3,7 +3,7 @@
 @section('title', $folder->name . ' \ Syllaboost')
 
 @section('main')
-    <div x-data="{ editing: {{ $errors->has('name') || $errors->has('description') ? 'true' : 'false' }}, addDeckModalOpen: false, tagModalOpen: false, activeDeckId: null, activeTagName: '' }"
+    <div x-data="{ editing: {{ $errors->has('name') || $errors->has('description') ? 'true' : 'false' }}, addDeckModalOpen: new URLSearchParams(window.location.search).has('user_decks_page') || {{ $errors->has('deck_ids') ? 'true' : 'false' }}, tagModalOpen: false, activeDeckId: null, activeTagName: '' }"
         class="flex flex-col space-y-8">
 
         <!-- Folder Header -->
@@ -11,12 +11,12 @@
             <div class="flex flex-col flex-1 gap-4">
                 @php
                     $colors = [
-                        ['bg' => 'bg-sky-100', 'text' => 'text-sky-600', 'icon' => 'bg-sky-500'],
-                        ['bg' => 'bg-purple-100', 'text' => 'text-purple-600', 'icon' => 'bg-purple-500'],
-                        ['bg' => 'bg-yellow-100', 'text' => 'text-yellow-600', 'icon' => 'bg-yellow-500'],
-                        ['bg' => 'bg-emerald-100', 'text' => 'text-emerald-600', 'icon' => 'bg-emerald-500'],
-                        ['bg' => 'bg-rose-100', 'text' => 'text-rose-600', 'icon' => 'bg-rose-500'],
-                        ['bg' => 'bg-indigo-100', 'text' => 'text-indigo-600', 'icon' => 'bg-indigo-500'],
+                        ['bg' => 'bg-sky-100', 'text' => 'text-sky-600', 'icon' => 'bg-sky-500', 'focus' => 'focus:outline-sky-600'],
+                        ['bg' => 'bg-purple-100', 'text' => 'text-purple-600', 'icon' => 'bg-purple-500', 'focus' => 'focus:outline-purple-600'],
+                        ['bg' => 'bg-yellow-100', 'text' => 'text-yellow-600', 'icon' => 'bg-yellow-500', 'focus' => 'focus:outline-yellow-600'],
+                        ['bg' => 'bg-emerald-100', 'text' => 'text-emerald-600', 'icon' => 'bg-emerald-500', 'focus' => 'focus:outline-emerald-600'],
+                        ['bg' => 'bg-rose-100', 'text' => 'text-rose-600', 'icon' => 'bg-rose-500', 'focus' => 'focus:outline-rose-600'],
+                        ['bg' => 'bg-indigo-100', 'text' => 'text-indigo-600', 'icon' => 'bg-indigo-500', 'focus' => 'focus:outline-indigo-600'],
                     ];
                     $color = $colors[$folder->id % count($colors)];
                 @endphp
@@ -44,14 +44,14 @@
 
                 <!-- Edit Mode -->
                 <form x-show="editing" style="display: none;" action="{{ route('folders.update', $folder->slug) }}"
-                    method="POST" class="w-full max-w-xl">
+                    method="POST" class="w-2xl" x-data="{ isSubmitting: false }" @submit="isSubmitting = true">
                     @csrf
                     @method('PUT')
                     <div class="space-y-4">
                         <div>
                             <label for="name" class="block mb-1 font-medium text-zinc-700 text-sm">Folder Name</label>
                             <input type="text" name="name" id="name" value="{{ old('name', $folder->name) }}"
-                                class="bg-white px-3 py-2 border border-zinc-300 rounded-lg focus:outline-sky-600 w-full"
+                                class="bg-white px-3 py-2 border border-zinc-300 rounded-lg {{ $color['focus'] }} w-full"
                                 required>
                             @error('name')<p class="mt-1 text-red-500 text-sm">{{ $message }}</p>@enderror
                         </div>
@@ -59,15 +59,27 @@
                             <label for="description"
                                 class="block mb-1 font-medium text-zinc-700 text-sm">Description</label>
                             <textarea name="description" id="description" rows="3"
-                                class="bg-white px-3 py-2 border border-zinc-300 rounded-lg focus:outline-sky-600 w-full">{{ old('description', $folder->description) }}</textarea>
+                                class="bg-white px-3 py-2 border border-zinc-300 rounded-lg {{ $color['focus'] }} w-full">{{ old('description', $folder->description) }}</textarea>
                             @error('description')<p class="mt-1 text-red-500 text-sm">{{ $message }}</p>@enderror
                         </div>
                         <div class="flex gap-2">
                             <button type="button" @click="editing = false"
-                                class="bg-zinc-100 hover:bg-zinc-200 px-4 py-2 rounded-lg font-medium text-zinc-700 transition-colors">Cancel</button>
-                            <button type="submit"
-                                class="bg-zinc-900 hover:bg-zinc-800 px-4 py-2 rounded-lg font-medium text-white transition-colors">Save
-                                Changes</button>
+                                class="hover:bg-zinc-100 px-4 py-2 rounded-full font-medium text-zinc-700 transition-colors cursor-pointer">Cancel</button>
+                            <button type="submit" :disabled="isSubmitting || !isValid"
+                                :class="(isSubmitting || !isValid) ? 'bg-zinc-700 cursor-not-allowed opacity-60' : 'bg-zinc-950 hover:scale-105 active:scale-100 cursor-pointer'"
+                                class="flex justify-center items-center bg-zinc-900 hover:bg-zinc-800 shadow-sm px-5 py-2.5 rounded-full w-36 font-medium text-white transition-colors cursor-pointer">
+                                <span x-show="!isSubmitting">
+                                    Save Changes
+                                </span>
+                                <span x-show="isSubmitting">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
+                                        <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                                    </svg>
+                                </span>
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -274,135 +286,10 @@
         @endif
 
         <!-- Add Deck Modal -->
-        <div x-show="addDeckModalOpen" x-data="{ searchQuery: '' }"
-            class="z-50 fixed inset-0 flex justify-center items-center" style="display: none;">
-            <div x-show="addDeckModalOpen" x-transition.opacity class="fixed inset-0 bg-black/40 backdrop-blur-sm"
-                @click="addDeckModalOpen = false"></div>
-
-            <div x-show="addDeckModalOpen" x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100"
-                x-transition:leave-end="opacity-0 scale-95"
-                class="relative flex flex-col bg-white shadow-xl mx-4 rounded-3xl w-full max-w-2xl h-[80vh] overflow-hidden">
-
-                <div class="flex justify-between items-center p-6 pb-4">
-                    <h3 class="font-bold text-zinc-900 text-lg">Add Deck to Folder</h3>
-                    <button @click="addDeckModalOpen = false"
-                        class="bg-zinc-100 hover:bg-zinc-200 p-2 rounded-full text-zinc-400 hover:text-zinc-600 transition-colors cursor-pointer cursor-pointer">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                            </path>
-                        </svg>
-                    </button>
-                </div>
-
-                @if($userDecks->isEmpty())
-                    <div class="p-6">
-                        <p class="py-4 text-zinc-500 text-center">You have no other decks available to add.</p>
-                        <div class="flex justify-end gap-3 mt-6">
-                            <button type="button" @click="addDeckModalOpen = false"
-                                class="bg-zinc-100 hover:bg-zinc-200 px-5 py-2.5 rounded-full font-medium text-zinc-700 transition-colors">Close</button>
-                        </div>
-                    </div>
-                @else
-                    <div class="px-6 pt-4">
-                        <div class="relative">
-                            <div class="left-0 absolute inset-y-0 flex items-center pl-3 text-zinc-400 pointer-events-none">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                                </svg>
-                            </div>
-                            <input x-model="searchQuery" type="text" placeholder="Search decks..."
-                                class="block bg-white p-2.5 pl-10 border border-zinc-200 focus:border-purple-600 rounded-full focus:outline-purple-600 w-full text-sm transition-colors"
-                                autocomplete="off">
-                        </div>
-                    </div>
-
-                    <form action="{{ route('folders.decks.add', $folder->slug) }}" method="POST"
-                        class="flex flex-col flex-1 min-h-0 overflow-hidden">
-                        @csrf
-                        <div class="flex-1 p-6 min-h-0 overflow-y-auto custom-scrollbar">
-                            <div class="space-y-2">
-                                @foreach($userDecks as $deck)
-                                    <label
-                                        x-show="searchQuery === '' || '{{ strtolower(addslashes($deck->name)) }}'.includes(searchQuery.toLowerCase())"
-                                        class="flex justify-between items-center bg-zinc-100 [&:has(:checked)]:bg-sky-50 hover:bg-sky-50 p-3 [&:has(:checked)]:border-sky-600 hover:border-sky-200 rounded-xl [&:has(:checked)]:ring-1 [&:has(:checked)]:ring-sky-600 transition-all cursor-pointer">
-                                        <div class="flex flex-col">
-                                            <span class="font-medium text-zinc-900">{{ str($deck->name)->limit(40) }}</span>
-                                            <span class="text-zinc-500 text-xs">{{ $deck->cards()->count() }} cards</span>
-                                        </div>
-                                        <input type="radio" name="deck_id" value="{{ $deck->id }}"
-                                            class="border-zinc-300 focus:ring-sky-600 w-4 h-4 text-sky-600" required>
-                                    </label>
-                                @endforeach
-                            </div>
-                        </div>
-
-                        <div class="flex justify-end gap-3 bg-white mt-auto p-6">
-                            <button type="button" @click="addDeckModalOpen = false"
-                                class="bg-white hover:bg-zinc-50 px-5 py-2.5 border border-zinc-200 rounded-full font-medium text-zinc-700 transition-colors cursor-pointer">
-                                Cancel
-                            </button>
-                            <button type="submit"
-                                class="bg-zinc-900 hover:bg-zinc-800 shadow-sm px-5 py-2.5 rounded-full font-medium text-white transition-colors cursor-pointer">Add
-                                to Folder
-                            </button>
-                        </div>
-                    </form>
-                @endif
-            </div>
-        </div>
+        <x-folder-add-deck-modal :user-decks="$userDecks" :folder="$folder" />
 
         <!-- Tag Modal -->
-        <div x-show="tagModalOpen" class="z-50 fixed inset-0 flex justify-center items-center" style="display: none;">
-            <div x-show="tagModalOpen" x-transition.opacity class="fixed inset-0 bg-black/40 backdrop-blur-sm"
-                @click="tagModalOpen = false"></div>
-
-            <div x-show="tagModalOpen" x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100"
-                x-transition:leave-end="opacity-0 scale-95"
-                class="relative bg-white shadow-xl mx-4 p-6 rounded-3xl w-full max-w-md overflow-hidden">
-                <div class="flex justify-between items-center mb-5">
-                    <h3 class="font-bold text-zinc-900 text-lg">Update Deck Tag</h3>
-                    <button @click="tagModalOpen = false" class="text-zinc-400 hover:text-zinc-600"><svg class="w-5 h-5"
-                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                            </path>
-                        </svg></button>
-                </div>
-
-                <form
-                    :action="`{{ route('folders.decks.tag', ['folder' => $folder->slug, 'deck' => 'DECK_ID']) }}`.replace('DECK_ID', activeDeckId)"
-                    method="POST">
-                    @csrf
-                    @method('PUT')
-                    <div class="mb-5">
-                        <label class="block mb-1 font-medium text-zinc-700 text-sm">Tag Name (e.g. Semester 1, Quiz
-                            Prep)</label>
-                        <input type="text" name="tag_name" x-model="activeTagName"
-                            class="bg-white px-3 py-2 border border-zinc-300 rounded-lg focus:outline-sky-600 w-full"
-                            placeholder="Leave empty to remove tag">
-
-                        <div class="flex flex-wrap gap-2 mt-3">
-                            @foreach($tags as $tag)
-                                <button type="button" @click="activeTagName = '{{ addslashes($tag->name) }}'"
-                                    class="bg-zinc-100 hover:bg-zinc-200 px-2.5 py-1 rounded-md text-zinc-700 text-xs transition-colors">{{ $tag->name }}</button>
-                            @endforeach
-                        </div>
-                    </div>
-
-                    <div class="flex justify-end gap-3 mt-6">
-                        <button type="button" @click="tagModalOpen = false"
-                            class="bg-zinc-100 hover:bg-zinc-200 px-4 py-2 rounded-full font-medium text-zinc-700 transition-colors">Cancel</button>
-                        <button type="submit"
-                            class="bg-zinc-900 hover:bg-zinc-800 px-4 py-2 rounded-full font-medium text-white transition-colors">Save
-                            Tag</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+        <x-folder-tag-modal :folder="$folder" :tags="$tags" />
 
     </div>
 

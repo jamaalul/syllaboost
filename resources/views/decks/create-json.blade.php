@@ -5,28 +5,28 @@
 @section('main')
     @php
         $aiPrompt = <<<'EOT'
-Generate a flashcard deck in valid JSON format based on the uploaded module or study material. Follow this exact structure:
+                                                Generate a flashcard deck in valid JSON format based on the uploaded module or study material. Follow this exact structure:
 
-{
-  "name": "Deck Name",
-  "description": "Description",
-  "is_public": false,
-  "cards": [
-    { "front": "Question", "back": "Answer" }
-  ]
-}
+                                                {
+                                                  "name": "Deck Name",
+                                                  "description": "Description",
+                                                  "is_public": false,
+                                                  "cards": [
+                                                    { "front": "Question", "back": "Answer" }
+                                                  ]
+                                                }
 
-Requirements:
+                                                Requirements:
 
-Use the uploaded module as the only source of content.
-Create clear, concise, and study-focused flashcards.
-Each "front" should contain a single question or concept prompt.
-Each "back" should contain a precise, self-contained answer.
-Cover the most important concepts from the material (do not skip key topics).
-Avoid duplicates, filler text, or overly long explanations.
-Keep wording simple and unambiguous.
-Return only valid JSON (no extra text, comments, or formatting outside the JSON).
-EOT;
+                                                Use the uploaded module as the only source of content.
+                                                Create clear, concise, and study-focused flashcards.
+                                                Each "front" should contain a single question or concept prompt.
+                                                Each "back" should contain a precise, self-contained answer.
+                                                Cover the most important concepts from the material (do not skip key topics).
+                                                Avoid duplicates, filler text, or overly long explanations.
+                                                Keep wording simple and unambiguous.
+                                                Return only valid JSON (no extra text, comments, or formatting outside the JSON).
+                                                EOT;
     @endphp
 
     <div x-data="{ jsonData: @js(old('json_data', '')), isSubmitting: false, prompt: @js($aiPrompt), copyStatus: 'Copy AI Prompt', copyPrompt() { navigator.clipboard.writeText(this.prompt); this.copyStatus = 'Copied!'; setTimeout(() => { this.copyStatus = 'Copy AI Prompt' }, 2000); } }"
@@ -36,21 +36,14 @@ EOT;
                 <h1 class="font-bold text-zinc-900 text-3xl">Create Deck with AI</h1>
                 <p class="mt-2 text-zinc-500">Paste your JSON data below to quickly create a new deck.</p>
             </div>
-            <a href="{{ route('decks.create') }}" x-data="{ loading: false }" @click="loading = true"
+            <a href="{{ route('decks.create') }}"
                 class="flex justify-center items-center gap-2 w-40 font-medium text-zinc-500 hover:text-zinc-700 transition-colors">
-                <span class="flex justify-center items-center gap-2" x-show="!loading">
+                <span class="flex justify-center items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                         stroke="currentColor" class="size-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                     </svg>
                     Back to Manual
-                </span>
-                <span x-show="loading">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
-                        <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                    </svg>
                 </span>
             </a>
         </div>
@@ -107,19 +100,9 @@ EOT;
                 <div class="flex justify-between items-center pt-8 border-zinc-200 border-t">
                     <p class="text-zinc-500 text-sm italic">Ensure your JSON follows the required format.</p>
                     <div class="flex items-center gap-4">
-                        <a href="{{ route('decks.create') }}" x-data="{ loading: false }" @click="loading = true"
+                        <a href="{{ route('decks.create') }}"
                             class="flex justify-center hover:bg-zinc-50 px-4 py-2 rounded-full w-30 font-semibold text-zinc-950 hover:scale-105 active:scale-100 transition-all duration-100 cursor-pointer">
-                            <span x-show="!loading">
-                                Cancel
-                            </span>
-                            <span x-show="loading">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
-                                    <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                                </svg>
-                            </span>
+                            Cancel
                         </a>
                         <button type="submit" :disabled="isSubmitting || jsonData.trim() === ''"
                             :class="(isSubmitting || jsonData.trim() === '') ? 'bg-zinc-700 cursor-not-allowed opacity-60' : 'bg-zinc-950 hover:scale-105 active:scale-100 cursor-pointer'"

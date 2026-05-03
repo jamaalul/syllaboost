@@ -15,21 +15,14 @@
                     </a>
                 </p>
             </div>
-            <a href="{{ route('dashboard') }}" x-data="{ loading: false }" @click="loading = true"
+            <a href="{{ route('dashboard') }}"
                 class="flex justify-center items-center gap-2 w-24 font-medium text-zinc-500 hover:text-zinc-700 transition-colors">
-                <span class="flex justify-center items-center gap-2" x-show="!loading">
+                <span class="flex justify-center items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                         stroke="currentColor" class="size-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                     </svg>
                     Cancel
-                </span>
-                <span x-show="loading">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
-                        <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                    </svg>
                 </span>
             </a>
         </div>
@@ -57,7 +50,8 @@
                 <div class="flex items-center gap-3">
                     <label for="is_public" class="flex items-center gap-3 cursor-pointer">
                         <div class="inline-flex relative items-center">
-                            <input type="checkbox" name="is_public" id="is_public" value="1" x-model="is_public" class="sr-only peer">
+                            <input type="checkbox" name="is_public" id="is_public" value="1" x-model="is_public"
+                                class="sr-only peer">
                             <div
                                 class="peer after:top-[2px] after:absolute after:inset-s-[2px] bg-zinc-200 after:bg-white peer-checked:bg-sky-600 after:border after:border-zinc-300 peer-checked:after:border-white rounded-full after:rounded-full peer-focus:outline-none w-11 after:w-5 h-6 after:h-5 after:content-[''] after:transition-all rtl:peer-checked:after:-translate-x-full peer-checked:after:translate-x-full">
                             </div>
@@ -125,18 +119,9 @@
             <div class="flex justify-between items-center pt-8 border-zinc-200 border-t">
                 <p class="text-zinc-500 text-sm italic">All fields marked with * are required.</p>
                 <div class="flex items-center gap-4">
-                    <a href="{{ route('dashboard') }}" x-data="{ loading: false }" @click="loading = true"
+                    <a href="{{ route('dashboard') }}"
                         class="flex justify-center hover:bg-zinc-50 px-4 py-2 rounded-full w-30 font-semibold text-zinc-950 hover:scale-105 active:scale-100 transition-all duration-100 cursor-pointer">
-                        <span x-show="!loading">
-                            Cancel
-                        </span>
-                        <span x-show="loading">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
-                                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                            </svg>
-                        </span>
+                        Cancel
                     </a>
                     <button type="submit" :disabled="isSubmitting || !isValid"
                         :class="(isSubmitting || !isValid) ? 'bg-zinc-700 cursor-not-allowed opacity-60' : 'bg-zinc-950 hover:scale-105 active:scale-100 cursor-pointer'"

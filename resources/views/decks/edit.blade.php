@@ -4,51 +4,51 @@
 
 @section('main')
     <div x-data="{
-                name: @js(old('name', $deck->name)),
-                description: @js(old('description', $deck->description)),
-                is_public: @js((bool) old('is_public', $deck->is_public)),
-                isSubmitting: false,
-                cards: @js(old('cards', $deck->cards->map(fn($c) => ['front_content' => $c->front_content, 'back_content' => $c->back_content])->toArray())),
+                                        name: @js(old('name', $deck->name)),
+                                        description: @js(old('description', $deck->description)),
+                                        is_public: @js((bool) old('is_public', $deck->is_public)),
+                                        isSubmitting: false,
+                                        cards: @js(old('cards', $deck->cards->map(fn($c) => ['front_content' => $c->front_content, 'back_content' => $c->back_content])->toArray())),
 
-                jsonInput: '',
-                copyStatus: 'Copy AI Prompt',
-                get currentJson() {
-                    return JSON.stringify({
-                        name: this.name,
-                        description: this.description,
-                        is_public: this.is_public,
-                        cards: this.cards.map(c => ({ front: c.front_content, back: c.back_content }))
-                    }, null, 2);
-                },
-                get prompt() {
-                    return `Update the following flashcard deck in valid JSON format based on the provided instructions or material. Maintain the exact same structure:\n\n${this.currentJson}\n\nRequirements:\n\n- Update the existing cards, add new ones, or remove unnecessary ones based on the prompt.\n- Keep the same JSON structure.\n- Each \'front\' should contain a single question or concept prompt.\n- Each \'back\' should contain a precise, self-contained answer.\n- Return only valid JSON (no extra text, comments, or formatting outside the JSON).`;
-                },
-                copyPrompt() {
-                    navigator.clipboard.writeText(this.prompt);
-                    this.copyStatus = 'Copied!';
-                    setTimeout(() => { this.copyStatus = 'Copy AI Prompt' }, 2000);
-                },
-                applyJson() {
-                    try {
-                        let parsed = JSON.parse(this.jsonInput);
-                        if (parsed.name !== undefined) this.name = parsed.name;
-                        if (parsed.description !== undefined) this.description = parsed.description;
-                        if (parsed.is_public !== undefined) this.is_public = parsed.is_public;
-                        if (parsed.cards && Array.isArray(parsed.cards)) {
-                            this.cards = parsed.cards.map(c => ({
-                                front_content: c.front_content || c.front || '',
-                                back_content: c.back_content || c.back || ''
-                            }));
-                        }
-                    } catch (e) {
-                        alert('Invalid JSON. Please check the format.');
-                    }
-                },
+                                        jsonInput: '',
+                                        copyStatus: 'Copy AI Prompt',
+                                        get currentJson() {
+                                            return JSON.stringify({
+                                                name: this.name,
+                                                description: this.description,
+                                                is_public: this.is_public,
+                                                cards: this.cards.map(c => ({ front: c.front_content, back: c.back_content }))
+                                            }, null, 2);
+                                        },
+                                        get prompt() {
+                                            return `Update the following flashcard deck in valid JSON format based on the provided instructions or material. Maintain the exact same structure:\n\n${this.currentJson}\n\nRequirements:\n\n- Update the existing cards, add new ones, or remove unnecessary ones based on the prompt.\n- Keep the same JSON structure.\n- Each \'front\' should contain a single question or concept prompt.\n- Each \'back\' should contain a precise, self-contained answer.\n- Return only valid JSON (no extra text, comments, or formatting outside the JSON).`;
+                                        },
+                                        copyPrompt() {
+                                            navigator.clipboard.writeText(this.prompt);
+                                            this.copyStatus = 'Copied!';
+                                            setTimeout(() => { this.copyStatus = 'Copy AI Prompt' }, 2000);
+                                        },
+                                        applyJson() {
+                                            try {
+                                                let parsed = JSON.parse(this.jsonInput);
+                                                if (parsed.name !== undefined) this.name = parsed.name;
+                                                if (parsed.description !== undefined) this.description = parsed.description;
+                                                if (parsed.is_public !== undefined) this.is_public = parsed.is_public;
+                                                if (parsed.cards && Array.isArray(parsed.cards)) {
+                                                    this.cards = parsed.cards.map(c => ({
+                                                        front_content: c.front_content || c.front || '',
+                                                        back_content: c.back_content || c.back || ''
+                                                    }));
+                                                }
+                                            } catch (e) {
+                                                alert('Invalid JSON. Please check the format.');
+                                            }
+                                        },
 
-                addCard() { this.cards.push({ front_content: '', back_content: '' }); },
-                removeCard(index) { if (this.cards.length > 1) { this.cards.splice(index, 1); } },
-                get isValid() { return this.name.trim() !== '' && this.cards.every(c => c.front_content.trim() !== '' && c.back_content.trim() !== ''); }
-            }" class="space-y-8">
+                                        addCard() { this.cards.push({ front_content: '', back_content: '' }); },
+                                        removeCard(index) { if (this.cards.length > 1) { this.cards.splice(index, 1); } },
+                                        get isValid() { return this.name.trim() !== '' && this.cards.every(c => c.front_content.trim() !== '' && c.back_content.trim() !== ''); }
+                                    }" class="space-y-8">
         <div class="flex justify-between items-center">
             <div>
                 <h1 class="font-bold text-zinc-900 text-3xl">Edit Deck</h1>
@@ -56,21 +56,14 @@
                     Update your deck details and flashcards.
                 </p>
             </div>
-            <a href="{{ route('decks.index') }}" x-data="{ loading: false }" @click="loading = true"
+            <a href="{{ route('decks.index') }}"
                 class="flex justify-center items-center gap-2 w-24 font-medium text-zinc-500 hover:text-zinc-700 transition-colors">
-                <span class="flex justify-center items-center gap-2" x-show="!loading">
+                <span class="flex justify-center items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                         stroke="currentColor" class="size-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                     </svg>
                     Cancel
-                </span>
-                <span x-show="loading">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
-                        <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                    </svg>
                 </span>
             </a>
         </div>
@@ -232,18 +225,9 @@
             <div class="flex justify-between items-center pt-8 border-zinc-200 border-t">
                 <p class="text-zinc-500 text-sm italic">All fields marked with * are required.</p>
                 <div class="flex items-center gap-4">
-                    <a href="{{ route('decks.index') }}" x-data="{ loading: false }" @click="loading = true"
+                    <a href="{{ route('decks.index') }}"
                         class="flex justify-center hover:bg-zinc-50 px-4 py-2 rounded-full w-30 font-semibold text-zinc-950 hover:scale-105 active:scale-100 transition-all duration-100 cursor-pointer">
-                        <span x-show="!loading">
-                            Cancel
-                        </span>
-                        <span x-show="loading">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
-                                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                            </svg>
-                        </span>
+                        Cancel
                     </a>
                     <button type="submit" :disabled="isSubmitting || !isValid"
                         :class="(isSubmitting || !isValid) ? 'bg-zinc-700 cursor-not-allowed opacity-60' : 'bg-zinc-950 hover:scale-105 active:scale-100 cursor-pointer'"
