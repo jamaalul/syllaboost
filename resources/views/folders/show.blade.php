@@ -7,7 +7,7 @@
         class="flex flex-col space-y-8">
 
         <!-- Folder Header -->
-        <div class="flex justify-between items-start">
+        <div class="flex flex-col justify-between items-start">
             <div class="flex flex-col flex-1 gap-4">
                 @php
                     $colors = [
@@ -74,7 +74,7 @@
             </div>
 
             <!-- Folder Actions -->
-            <div class="flex gap-2 mt-auto">
+            <div class="flex gap-2 mt-4 ml-auto">
                 <button @click="addDeckModalOpen = true"
                     class="flex items-center gap-2 bg-zinc-950 px-4 py-2 rounded-full font-semibold text-white hover:scale-105 transition-all cursor-pointer">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
