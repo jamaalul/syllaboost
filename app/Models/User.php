@@ -29,7 +29,13 @@ class User extends Authenticatable
         ];
     }
 
-    public function deck() {
-        return $this->hasMany(Deck::class)->orderBy('order');
+    public function decks()
+    {
+        return $this->hasMany(Deck::class)->orderBy('created_at', 'desc');
+    }
+
+    public function folders()
+    {
+        return $this->hasMany(Folder::class)->orderBy('created_at', 'desc');
     }
 }

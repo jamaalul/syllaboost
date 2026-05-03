@@ -5,7 +5,8 @@
 @endsection
 
 @section('content')
-    <section class="flex bg-zinc-100 w-screen h-screen overflow-hidden" x-data="{ sidebarOpen: false }">
+    <section class="flex bg-zinc-100 w-screen h-screen overflow-hidden"
+        x-data="{ sidebarOpen: false, createFolderModalOpen: {{ $errors->has('name') ? 'true' : 'false' }} }">
         <!-- Mobile sidebar overlay -->
         <div x-show="sidebarOpen" x-transition.opacity class="lg:hidden z-20 fixed inset-0 bg-black/50"
             @click="sidebarOpen = false" style="display: none;"></div>
@@ -41,7 +42,7 @@
             <!-- Navigation Links -->
             <nav class="flex-1 space-y-2 px-4 py-4 overflow-y-auto">
                 <a href="{{ route('dashboard') }}" x-data="{ loading: false }" @click="loading = true"
-                    class="group flex items-center px-4 py-2.5 rounded-lg w-full font-medium transition-colors {{ request()->routeIs('dashboard') ? 'bg-white text-sky-600' : 'text-zinc-600 hover:bg-zinc-200' }}">
+                    class="group flex items-center px-4 py-2.5 rounded-lg w-full font-medium transition-colors {{ request()->routeIs('dashboard') ? 'bg-sky-100 text-sky-500' : 'text-zinc-500 hover:bg-zinc-200' }}">
                     <span x-show="!loading" class="flex justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="mr-2 size-5">
                             <path
@@ -60,13 +61,12 @@
                     </span>
                 </a>
                 <a href="{{ route('decks.index') }}" x-data="{ loading: false }" @click="loading = true"
-                    class="group flex items-center w-full px-4 py-2.5 rounded-lg font-medium transition-colors {{ request()->routeIs('decks.*') ? 'bg-white text-sky-600' : 'text-zinc-600 hover:bg-zinc-200' }}">
+                    class="group flex items-center w-full px-4 py-2.5 rounded-lg font-medium transition-colors {{ request()->routeIs('decks.*') ? 'bg-sky-100 text-sky-500' : 'text-zinc-500 hover:bg-zinc-200' }}">
                     <span x-show="!loading" class="flex justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="mr-2 size-5">
                             <path d="M16.5 6a3 3 0 0 0-3-3H6a3 3 0 0 0-3 3v7.5a3 3 0 0 0 3 3v-6A4.5 4.5 0 0 1 10.5 6h6Z" />
                             <path d="M18 7.5a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3h-7.5a3 3 0 0 1-3-3v-7.5a3 3 0 0 1 3-3H18Z" />
                         </svg>
-
                         Your Decks
                     </span>
                     <span x-show="loading" class="flex justify-center w-full">
@@ -77,6 +77,50 @@
                         </svg>
                     </span>
                 </a>
+                <span class="flex my-6 border-zinc-200 border-t"></span>
+                <h3 class="font-bold text-zinc-500">Your Folders</h3>
+                @foreach ($user->folders as $folder)
+                    @php
+                        $colors = [
+                            ['bg' => 'bg-sky-100', 'text' => 'text-sky-600', 'icon' => 'bg-sky-500'],
+                            ['bg' => 'bg-purple-100', 'text' => 'text-purple-600', 'icon' => 'bg-purple-500'],
+                            ['bg' => 'bg-yellow-100', 'text' => 'text-yellow-600', 'icon' => 'bg-yellow-500'],
+                            ['bg' => 'bg-emerald-100', 'text' => 'text-emerald-600', 'icon' => 'bg-emerald-500'],
+                            ['bg' => 'bg-rose-100', 'text' => 'text-rose-600', 'icon' => 'bg-rose-500'],
+                            ['bg' => 'bg-indigo-100', 'text' => 'text-indigo-600', 'icon' => 'bg-indigo-500'],
+                        ];
+                        $color = $colors[$folder->id % count($colors)];
+                    @endphp
+                    <a href="{{ route('folders.show', $folder->slug) }}" x-data="{ loading: false }" @click="loading = true"
+                        class="group flex items-center w-full px-4 py-2.5 rounded-lg font-medium transition-colors {{ request()->routeIs('folders.show') && request()->route('folder')->slug === $folder->slug ? $color['bg'] . ' ' . $color['text'] : 'text-zinc-500 hover:bg-zinc-200' }}">
+                        <span x-show="!loading" class="flex justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="{{ $color['text'] }} mr-2 size-5">
+                                <path
+                                    d="M19.5 21a3 3 0 0 0 3-3v-4.5a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3V18a3 3 0 0 0 3 3h15ZM1.5 10.146V6a3 3 0 0 1 3-3h5.379a2.25 2.25 0 0 1 1.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 0 1 3 3v1.146A4.483 4.483 0 0 0 19.5 9h-15a4.483 4.483 0 0 0-3 1.146Z" />
+                            </svg>
+                            {{ str($folder->name)->limit(17) }}
+                        </span>
+                        <span x-show="loading" class="flex justify-center w-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
+                                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                            </svg>
+                        </span>
+                    </a>
+                @endforeach
+                <button @click="createFolderModalOpen = true"
+                    class="group flex items-center hover:bg-zinc-200 px-4 py-2.5 rounded-lg w-full font-medium text-zinc-500 transition-colors cursor-pointer">
+                    <span class="flex justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="mr-2 size-5">
+                            <path fill-rule="evenodd"
+                                d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        New Folder
+                    </span>
+                </button>
                 <!-- Add more links here later -->
             </nav>
 
@@ -84,11 +128,11 @@
             <div class="p-4 border-zinc-200 border-t">
                 <div class="flex items-center gap-3 mb-4">
                     <div class="flex justify-center items-center bg-sky-100 rounded-full w-10 h-10 font-bold text-sky-700">
-                        {{ substr(auth()->user()->name ?? 'U', 0, 1) }}
+                        {{ substr($user->name ?? 'U', 0, 1) }}
                     </div>
                     <div class="flex-1 min-w-0">
-                        <p class="font-medium text-zinc-900 text-sm truncate">{{ auth()->user()->name ?? 'User' }}</p>
-                        <p class="text-zinc-500 text-xs truncate">{{ auth()->user()->email ?? 'user@example.com' }}</p>
+                        <p class="font-medium text-zinc-900 text-sm truncate">{{ $user->name ?? 'User' }}</p>
+                        <p class="text-zinc-500 text-xs truncate">{{ $user->email ?? 'user@example.com' }}</p>
                     </div>
                 </div>
                 <form method="POST" action="{{ route('logout') }}">
@@ -130,7 +174,7 @@
                         </span>
                     </a>
                     <div class="bg-zinc-100 rounded-full size-10 overflow-hidden">
-                        <img src="{{ asset(auth()->user()->avatar) }}" alt="Avatar" class="w-full h-full">
+                        <img src="{{ asset($user->avatar) }}" alt="Avatar" class="w-full h-full">
                     </div>
                 </div>
             </header>
@@ -161,12 +205,14 @@
                             </span>
                         </a>
                         <div class="bg-zinc-100 rounded-full size-10 overflow-hidden">
-                            <img src="{{ asset(auth()->user()->avatar) }}" alt="Avatar" class="w-full h-full">
+                            <img src="{{ asset($user->avatar) }}" alt="Avatar" class="w-full h-full">
                         </div>
                     </div>
                 </header>
                 @yield('main')
             </div>
         </main>
+
+        <x-folder-create-modal />
     </section>
 @endsection

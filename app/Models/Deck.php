@@ -33,4 +33,9 @@ class Deck extends Model
     {
         return $this->hasMany(Card::class)->orderBy('order');
     }
+
+    public function folders()
+    {
+        return $this->belongsToMany(Folder::class)->withPivot('tag_id')->withTimestamps();
+    }
 }
