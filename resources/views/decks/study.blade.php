@@ -505,10 +505,15 @@
             }, { passive: true });
 
             // ── Hint bar ──────────────────────────────────────────────────────────
-            const isTouch = window.matchMedia('(pointer: coarse)').matches;
+            const isTouch = (
+                ('ontouchstart' in window || navigator.maxTouchPoints > 0) &&
+                window.matchMedia('(pointer: coarse)').matches
+            );
+
             document.getElementById('hint-desktop').classList.toggle('hidden', isTouch);
             const hintMobile = document.getElementById('hint-mobile');
-            if (isTouch) hintMobile.classList.replace('hidden', 'flex');
+            hintMobile.classList.toggle('hidden', !isTouch);
+            hintMobile.classList.toggle('flex', isTouch);
 
             // ── Go ────────────────────────────────────────────────────────────────
             boot();
