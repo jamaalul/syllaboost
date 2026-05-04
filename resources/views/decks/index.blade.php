@@ -73,13 +73,16 @@
                                 </span>
                             @else
                                 <div x-data="{ copied: false }" class="relative">
-                                    <button type="button" 
+                                    <button type="button"
                                         @click="navigator.clipboard.writeText('{{ route('decks.public.study', $deck->slug) }}'); copied = true; setTimeout(() => copied = false, 2000)"
                                         class="inline-flex items-center bg-white hover:bg-zinc-50 px-2.5 py-0.5 rounded-full font-medium text-zinc-600 text-xs transition-colors cursor-pointer">
-                                        <svg class="mr-1 w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" x-show="!copied">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                                        <svg class="mr-1 w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            x-show="!copied">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
                                         </svg>
-                                        <svg class="mr-1 w-3 h-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" x-cloak x-show="copied">
+                                        <svg class="mr-1 w-3 h-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            x-cloak x-show="copied">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                         </svg>
                                         <span x-text="copied ? 'Copied!' : 'Share'"></span>
@@ -105,12 +108,12 @@
                             </div>
                             <div class="flex">
                                 <button type="button" @click="$dispatch('confirm-action', { 
-                                                                action: '{{ route('decks.destroy', $deck->slug) }}', 
-                                                                method: 'DELETE',
-                                                                title: 'Delete this deck?',
-                                                                description: 'This action cannot be undone. The deck and all its cards will be permanently removed.',
-                                                                confirmText: 'Delete'
-                                                            })"
+                                                                                        action: '{{ route('decks.destroy', $deck->slug) }}', 
+                                                                                        method: 'DELETE',
+                                                                                        title: 'Delete this deck?',
+                                                                                        description: 'This action cannot be undone. The deck and all its cards will be permanently removed.',
+                                                                                        confirmText: 'Delete'
+                                                                                    })"
                                     class="p-2 text-zinc-400 hover:text-rose-500 transition-colors cursor-pointer"
                                     title="Delete Deck">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -119,7 +122,7 @@
                                     </svg>
                                 </button>
                                 <a href="{{ route('decks.edit', $deck->slug) }}"
-                                    class="p-2 text-zinc-400 hover:text-zinc-600 transition-colors" title="Edit Deck">
+                                    class="mr-2 p-2 text-zinc-400 hover:text-zinc-600 transition-colors" title="Edit Deck">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">

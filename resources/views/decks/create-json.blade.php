@@ -21,14 +21,8 @@
                                         - Use ONLY the uploaded material.
                                         - Each card must represent ONE atomic concept.
                                         - Keep content concise but clear:
-                                          - Front: short prompt or cue (typically 2–6 words, not full sentences).
-                                          - Back: short, precise answer (typically 3–10 words).
-                                        - Do NOT write exam-style questions.
-                                        - Prefer formats like:
-                                          - Term → Definition
-                                          - Concept → Key idea
-                                          - Process → Key steps (compressed)
-                                          - Formula → Meaning
+                                          - Front: short prompt or cue (typically 5–10 words, not full sentences).
+                                          - Back: short, precise answer (typically 5–10 words).
                                         - If a concept is complex, split it into multiple cards instead of lengthening one.
                                         - Avoid:
                                           - Long explanations
@@ -46,7 +40,7 @@
                                         EOT;
     @endphp
 
-    <div class="p-1 lg:p-4 w-full"
+    <div class="p-1 lg:p-0 w-full"
         x-data="{ jsonData: @js(old('json_data', '')), isSubmitting: false, prompt: @js($aiPrompt), copyStatus: 'Copy Prompt', copyPrompt() { navigator.clipboard.writeText(this.prompt); this.copyStatus = 'Copied!'; setTimeout(() => { this.copyStatus = 'Copy Prompt' }, 2000); } }">
         <div class="flex lg:flex-row flex-col lg:justify-between lg:items-center gap-2">
             <a href="{{ route('dashboard') }}"
@@ -140,21 +134,27 @@
                         @error('json_data')
                             <p class="mt-1 text-red-500 text-xs">{{ $message }}</p>
                         @enderror
-                        <button type="submit" :disabled="isSubmitting || jsonData.trim() === ''"
-                            :class="(isSubmitting || jsonData.trim() === '') ? 'bg-zinc-700 cursor-not-allowed opacity-60' : 'bg-zinc-950 hover:scale-105 active:scale-98 cursor-pointer'"
-                            class="flex justify-center bg-zinc-950 mt-8 px-4 py-2 rounded-full w-full md:w-40 font-semibold text-white transition-all duration-100">
-                            <span x-show="!isSubmitting">
-                                Create Deck
-                            </span>
-                            <span x-show="isSubmitting" x-cloak>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
-                                    <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                                </svg>
-                            </span>
-                        </button>
+                        <div class="flex lg:flex-row flex-col lg:items-center gap-4 mt-8">
+                            <button type="submit" :disabled="isSubmitting || jsonData.trim() === ''"
+                                :class="(isSubmitting || jsonData.trim() === '') ? 'bg-zinc-700 cursor-not-allowed opacity-60' : 'bg-zinc-950 hover:scale-105 active:scale-98 cursor-pointer'"
+                                class="flex justify-center bg-zinc-950 px-4 py-2 rounded-full w-full md:w-40 font-semibold text-white transition-all duration-100">
+                                <span x-show="!isSubmitting">
+                                    Create Deck
+                                </span>
+                                <span x-show="isSubmitting" x-cloak>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="animate-spin lucide lucide-loader-circle-icon lucide-loader-circle">
+                                        <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                                    </svg>
+                                </span>
+                            </button>
+                            <a href="{{ route('decks.create') }}"
+                                class="h-fit text-zinc-500 hover:text-sky-600 active:text-sky-600 text-center underline transition-all">
+                                Create manually instead
+                            </a>
+                        </div>
                     </form>
                 </div>
             </div>
