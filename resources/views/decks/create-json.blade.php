@@ -5,45 +5,45 @@
 @section('main')
     @php
         $aiPrompt = <<<'EOT'
-                Generate a flashcard deck in valid JSON format based strictly on the uploaded study material. Follow this exact structure:
+                                        Generate a flashcard deck in valid JSON format based strictly on the uploaded study material. Follow this exact structure:
 
-                {
-                  "name": "Deck Name",
-                  "description": "Short description of the material",
-                  "is_public": false,
-                  "cards": [
-                    { "front": "Prompt", "back": "Answer" }
-                  ]
-                }
+                                        {
+                                          "name": "Deck Name",
+                                          "description": "Short description of the material",
+                                          "is_public": false,
+                                          "cards": [
+                                            { "front": "Prompt", "back": "Answer" }
+                                          ]
+                                        }
 
-                Flashcard design rules (CRITICAL):
+                                        Flashcard design rules (CRITICAL):
 
-                - Use ONLY the uploaded material.
-                - Each card must represent ONE atomic concept.
-                - Keep content concise but clear:
-                  - Front: short prompt or cue (typically 2–6 words, not full sentences).
-                  - Back: short, precise answer (typically 3–10 words).
-                - Do NOT write exam-style questions.
-                - Prefer formats like:
-                  - Term → Definition
-                  - Concept → Key idea
-                  - Process → Key steps (compressed)
-                  - Formula → Meaning
-                - If a concept is complex, split it into multiple cards instead of lengthening one.
-                - Avoid:
-                  - Long explanations
-                  - Filler words
-                  - Redundant cards
-                - Wording must be simple, specific, and easy to recall.
-                - Cover all key concepts without skipping topics.
+                                        - Use ONLY the uploaded material.
+                                        - Each card must represent ONE atomic concept.
+                                        - Keep content concise but clear:
+                                          - Front: short prompt or cue (typically 2–6 words, not full sentences).
+                                          - Back: short, precise answer (typically 3–10 words).
+                                        - Do NOT write exam-style questions.
+                                        - Prefer formats like:
+                                          - Term → Definition
+                                          - Concept → Key idea
+                                          - Process → Key steps (compressed)
+                                          - Formula → Meaning
+                                        - If a concept is complex, split it into multiple cards instead of lengthening one.
+                                        - Avoid:
+                                          - Long explanations
+                                          - Filler words
+                                          - Redundant cards
+                                        - Wording must be simple, specific, and easy to recall.
+                                        - Cover all key concepts without skipping topics.
 
-                Output rules:
+                                        Output rules:
 
-                - Return ONLY valid JSON.
-                - No extra text, no markdown, no comments.
-                - Ensure correct JSON syntax.
+                                        - Return ONLY valid JSON.
+                                        - No extra text, no markdown, no comments.
+                                        - Ensure correct JSON syntax.
 
-                EOT;
+                                        EOT;
     @endphp
 
     <div class="p-1 lg:p-4 w-full"
@@ -65,10 +65,10 @@
             </div>
         </div>
 
-        <div class="flex flex-col mt-12">
+        <div class="flex flex-col mt-24">
 
             {{-- Step 1 --}}
-            <div class="flex gap-6 md:gap-12 h-50 lg:h-40">
+            <div class="flex gap-6 md:gap-12 h-50">
                 {{-- Stepper column: circle + vertical line --}}
                 <div class="flex flex-col items-center shrink-0">
                     <span class="bg-zinc-200 rounded-full w-5 h-5 shrink-0"></span>
@@ -104,7 +104,7 @@
             </div>
 
             {{-- Step 2 --}}
-            <div class="flex gap-6 md:gap-12 h-50 lg:h-40">
+            <div class="flex gap-6 md:gap-12 h-50">
                 <div class="flex flex-col items-center shrink-0">
                     <span class="bg-zinc-200 rounded-full w-5 h-5 shrink-0"></span>
                     <div class="bg-zinc-200 my-2 w-0.5 grow"></div>
