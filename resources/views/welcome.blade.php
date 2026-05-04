@@ -9,7 +9,7 @@
     <meta property="og:title" content="Syllaboost \ Learn Better" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{ request()->url() }}" />
-    <meta property="og:description" content="We you study how you should've been." />
+    <meta property="og:description" content="We help you study how you should've been." />
     <meta property="og:image" content="{{ asset('assets/og-welcome.webp') }}">
 </head>
 
