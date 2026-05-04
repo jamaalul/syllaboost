@@ -71,6 +71,20 @@
                                     </svg>
                                     Private
                                 </span>
+                            @else
+                                <div x-data="{ copied: false }" class="relative">
+                                    <button type="button" 
+                                        @click="navigator.clipboard.writeText('{{ route('decks.public.study', $deck->slug) }}'); copied = true; setTimeout(() => copied = false, 2000)"
+                                        class="inline-flex items-center bg-white hover:bg-zinc-50 px-2.5 py-0.5 rounded-full font-medium text-zinc-600 text-xs transition-colors cursor-pointer">
+                                        <svg class="mr-1 w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" x-show="!copied">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                                        </svg>
+                                        <svg class="mr-1 w-3 h-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" x-cloak x-show="copied">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                        <span x-text="copied ? 'Copied!' : 'Share'"></span>
+                                    </button>
+                                </div>
                             @endif
                         </div>
 

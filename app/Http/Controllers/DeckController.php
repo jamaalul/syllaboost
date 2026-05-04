@@ -155,6 +155,17 @@ class DeckController extends Controller
         return view('decks.study', compact('deck', 'cards'));
     }
 
+    public function publicStudy(Deck $deck): View
+    {
+        if (! $deck->is_public) {
+            abort(404);
+        }
+
+        $cards = $deck->cards()->orderBy('order')->select('front_content', 'back_content', 'order')->get();
+
+        return view('decks.public-study', compact('deck', 'cards'));
+    }
+
     public function destroy(Deck $deck): RedirectResponse
     {
         abort_if($deck->user_id !== auth()->id(), 403);

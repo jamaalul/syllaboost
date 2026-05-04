@@ -15,3 +15,5 @@ Route::middleware('auth')->prefix('decks')->controller(DeckController::class)->g
     Route::get('{deck:slug}/study', 'study')->name('decks.study');
     Route::delete('{deck:slug}', 'destroy')->name('decks.destroy');
 });
+
+Route::get('/decks/public/{deck:slug}/study', [DeckController::class, 'publicStudy'])->name('decks.public.study');
