@@ -19,19 +19,15 @@
     <div id="card-slider" class="relative flex justify-center items-center bg-zinc-100 w-screen h-dvh" tabindex="0">
 
         {{-- stack decoration (ghost layers behind) --}}
-        <div
-            class="z-10 absolute bg-white border border-zinc-200 rounded-3xl h-[60vh] md:h-[60vh] lg:h-[65vh] aspect-2/3 translate-y-4">
+        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl h-[60vh] aspect-2/3 translate-y-4">
         </div>
-        <div
-            class="z-10 absolute bg-white border border-zinc-200 rounded-3xl h-[60vh] md:h-[60vh] lg:h-[65vh] aspect-2/3 translate-y-3">
+        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl h-[60vh] aspect-2/3 translate-y-3">
         </div>
-        <div
-            class="z-10 absolute bg-white border border-zinc-200 rounded-3xl h-[60vh] md:h-[60vh] lg:h-[65vh] aspect-2/3 translate-y-2">
+        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl h-[60vh] aspect-2/3 translate-y-2">
         </div>
-        <div
-            class="z-10 absolute bg-white border border-zinc-200 rounded-3xl h-[60vh] md:h-[60vh] lg:h-[65vh] aspect-2/3 translate-y-1">
+        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl h-[60vh] aspect-2/3 translate-y-1">
         </div>
-        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl h-[60vh] md:h-[60vh] lg:h-[65vh] aspect-2/3">
+        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl h-[60vh] aspect-2/3">
         </div>
 
         {{--
@@ -42,7 +38,7 @@
         --}}
         @foreach (['a', 'b', 'c'] as $node)
             <div id="card-node-{{ $node }}"
-                class="absolute bg-white border-x border-zinc-200 rounded-3xl h-[60vh] md:h-[60vh] lg:h-[65vh] aspect-2/3 card-item"
+                class="absolute bg-white border-x border-zinc-200 rounded-3xl h-[60vh] aspect-2/3 card-item"
                 style="perspective: 1000px; will-change: transform, opacity;">
                 <div class="border border-zinc-200 w-full h-full card-flip-inner">
                     {{-- front --}}
