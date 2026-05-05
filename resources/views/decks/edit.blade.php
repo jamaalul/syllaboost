@@ -3,52 +3,8 @@
 @section('title', 'Edit Deck \ Syllaboost')
 
 @section('main')
-    <div class="flex flex-col gap-12 p-1 lg:p-0 w-full h-full" x-data="{
-                                                                            name: @js(old('name', $deck->name)),
-                                                                            description: @js(old('description', $deck->description)),
-                                                                            is_public: @js((bool) old('is_public', $deck->is_public)),
-                                                                            isSubmitting: false,
-                                                                            cards: @js(old('cards', $deck->cards->map(fn($c) => ['front_content' => $c->front_content, 'back_content' => $c->back_content])->toArray())),
-
-                                                                            jsonInput: '',
-                                                                            copyStatus: 'Copy AI Prompt',
-                                                                            get currentJson() {
-                                                                                return JSON.stringify({
-                                                                                    name: this.name,
-                                                                                    description: this.description,
-                                                                                    is_public: this.is_public,
-                                                                                    cards: this.cards.map(c => ({ front: c.front_content, back: c.back_content }))
-                                                                                }, null, 2);
-                                                                            },
-                                                                            get prompt() {
-                                                                                return `Update the following flashcard deck in valid JSON format based on the provided instructions or material. Maintain the exact same structure:\n\n${this.currentJson}\n\nRequirements:\n\n- Update the existing cards, add new ones, or remove unnecessary ones based on the prompt.\n- Keep the same JSON structure.\n- Each \'front\' should contain a single question or concept prompt.\n- Each \'back\' should contain a precise, self-contained answer.\n- Return only valid JSON (no extra text, comments, or formatting outside the JSON).`;
-                                                                            },
-                                                                            copyPrompt() {
-                                                                                navigator.clipboard.writeText(this.prompt);
-                                                                                this.copyStatus = 'Copied!';
-                                                                                setTimeout(() => { this.copyStatus = 'Copy AI Prompt' }, 2000);
-                                                                            },
-                                                                            applyJson() {
-                                                                                try {
-                                                                                    let parsed = JSON.parse(this.jsonInput);
-                                                                                    if (parsed.name !== undefined) this.name = parsed.name;
-                                                                                    if (parsed.description !== undefined) this.description = parsed.description;
-                                                                                    if (parsed.is_public !== undefined) this.is_public = parsed.is_public;
-                                                                                    if (parsed.cards && Array.isArray(parsed.cards)) {
-                                                                                        this.cards = parsed.cards.map(c => ({
-                                                                                            front_content: c.front_content || c.front || '',
-                                                                                            back_content: c.back_content || c.back || ''
-                                                                                        }));
-                                                                                    }
-                                                                                } catch (e) {
-                                                                                    alert('Invalid JSON. Please check the format.');
-                                                                                }
-                                                                            },
-
-                                                                            addCard() { this.cards.unshift({ front_content: '', back_content: '' }); },
-                                                                            removeCard(index) { if (this.cards.length > 1) { this.cards.splice(index, 1); } },
-                                                                            get isValid() { return this.name.trim() !== '' && this.cards.every(c => c.front_content.trim() !== '' && c.back_content.trim() !== ''); }
-                                                                        }">
+    <div class="flex flex-col gap-12 p-1 lg:p-0 w-full h-full"
+        x-data="{name:@js(old('name', $deck->name)),description:@js(old('description', $deck->description)),is_public:@js((bool) old('is_public', $deck->is_public)),isSubmitting:false,cards:@js(old('cards', $deck->cards->map(fn($c) => ['front_content' => $c->front_content, 'back_content' => $c->back_content])->toArray())),jsonInput:'',copyStatus:'Copy AI Prompt',get currentJson(){return JSON.stringify({name:this.name,description:this.description,is_public:this.is_public,cards:this.cards.map(c=>({front:c.front_content,back:c.back_content}))},null,2);},get prompt(){return `Update the following flashcard deck in valid JSON format based on the provided instructions or material. Maintain the exact same structure:\n\n${this.currentJson}\n\nRequirements:\n\n- Update the existing cards, add new ones, or remove unnecessary ones based on the prompt.\n- Keep the same JSON structure.\n- Each 'front' should contain a single question or concept prompt.\n- Each 'back' should contain a precise, self-contained answer.\n- Return only valid JSON (no extra text, comments, or formatting outside the JSON).`;},copyPrompt(){navigator.clipboard.writeText(this.prompt);this.copyStatus='Copied!';setTimeout(()=>{this.copyStatus='Copy AI Prompt'},2000);},applyJson(){try{let parsed=JSON.parse(this.jsonInput);if(parsed.name!==undefined)this.name=parsed.name;if(parsed.description!==undefined)this.description=parsed.description;if(parsed.is_public!==undefined)this.is_public=parsed.is_public;if(parsed.cards&&Array.isArray(parsed.cards)){this.cards=parsed.cards.map(c=>({front_content:c.front_content||c.front||'',back_content:c.back_content||c.back||''}));}}catch(e){alert('Invalid JSON. Please check the format.');}},addCard(){this.cards.unshift({front_content:'',back_content:''});},removeCard(index){if(this.cards.length>1){this.cards.splice(index,1);}},get isValid(){return this.name.trim()!==''&&this.cards.every(c=>c.front_content.trim()!==''&&c.back_content.trim()!=='');}}">
         <div class="p-1 lg:p-4 w-full">
             <div class="flex lg:flex-row flex-col lg:justify-between lg:items-center gap-2">
                 <a href="{{ route('decks.index') }}"
@@ -74,7 +30,8 @@
             @method('PUT')
 
             <!-- AI Assist Section -->
-            <div class="flex flex-col gap-6 bg-zinc-50 p-6 rounded-3xl w-full" x-data="{ expanded: false }">
+            <div class="flex flex-col gap-6 bg-white p-6 border border-zinc-200 rounded-3xl w-full"
+                x-data="{ expanded: false }">
                 <div class="flex justify-between items-center cursor-pointer"
                     @click="expanded = !expanded; if(expanded && !jsonInput) jsonInput = currentJson;">
                     <div class="flex flex-col gap-1">
@@ -87,8 +44,9 @@
                             </svg>
                             Edit with AI & JSON
                         </h2>
-                        <p class="text-zinc-500 text-sm">Update your deck automatically by pasting your current deck into
-                            AI.</p>
+                        <p class="text-zinc-500 text-sm text-balance">
+                            Update your deck automatically by pasting your current deck into AI.
+                        </p>
                     </div>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                         stroke="currentColor" class="size-6 text-zinc-400 transition-transform"
@@ -168,7 +126,7 @@
                             </div>
 
                             <textarea id="json_data" x-model="jsonInput" rows="10"
-                                class="bg-white p-4 border border-zinc-200 rounded-xl focus:outline-pink-600 w-full font-mono placeholder:text-zinc-400 resize-y"
+                                class="bg-zinc-100 p-4 rounded-xl focus:outline-pink-600 w-full font-mono placeholder:text-zinc-400 resize-y"
                                 placeholder='{ "name": "...", "cards": [...] }'></textarea>
                             <div class="flex justify-end pt-2">
                                 <button type="button" @click="applyJson; expanded = false;"

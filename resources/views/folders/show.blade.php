@@ -186,8 +186,8 @@
                     <div class="group relative flex flex-col bg-zinc-100 p-4 rounded-3xl h-full overflow-hidden">
 
                         <div class="flex justify-between items-start mb-4">
-                            <div class="p-2 {{ $deckColor['text'] }}">
-                                <svg class="size-6" viewBox="0 0 24 24" fill="currentColor">
+                            <div class="{{ $deckColor['text'] }}">
+                                <svg class="size-8" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M16.5 6a3 3 0 0 0-3-3H6a3 3 0 0 0-3 3v7.5a3 3 0 0 0 3 3v-6A4.5 4.5 0 0 1 10.5 6h6Z" />
                                     <path d="M18 7.5a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3h-7.5a3 3 0 0 1-3-3v-7.5a3 3 0 0 1 3-3H18Z" />
                                 </svg>
