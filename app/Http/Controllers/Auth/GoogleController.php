@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SendOtpMail;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Socialite\Facades\Socialite;
 
 class GoogleController extends Controller
@@ -36,11 +38,12 @@ class GoogleController extends Controller
             }
 
             $otp = (string) random_int(100000, 999999);
-            \Illuminate\Support\Facades\Cache::put('otp_'.$user->email, $otp, now()->addMinutes(10));
+            Cache::put('otp_'.$user->email, $otp, now()->addMinutes(10));
 
-            \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\SendOtpMail($otp));
+            Mail::to($user->email)->send(new SendOtpMail($otp));
 
             session()->put('email', $user->email);
+
             return redirect()->route('otp.show');
         } catch (\Exception $e) {
             return redirect()->route('login')->withErrors(['email' => 'Failed to log in with Google. Please try again.']);

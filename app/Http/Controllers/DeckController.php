@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDeckRequest;
+use App\Http\Requests\UpdateDeckRequest;
 use App\Models\Deck;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -67,7 +68,7 @@ class DeckController extends Controller
         return view('decks.edit', compact('deck'));
     }
 
-    public function update(\App\Http\Requests\UpdateDeckRequest $request, Deck $deck): RedirectResponse
+    public function update(UpdateDeckRequest $request, Deck $deck): RedirectResponse
     {
         abort_if($deck->user_id !== auth()->id(), 403);
 

@@ -6,6 +6,7 @@ use App\Http\Requests\StoreFolderRequest;
 use App\Models\Deck;
 use App\Models\Folder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FolderController extends Controller
 {
@@ -128,7 +129,7 @@ class FolderController extends Controller
 
     private function cleanupUnusedTags(Folder $folder)
     {
-        $usedTagIds = \Illuminate\Support\Facades\DB::table('deck_folder')
+        $usedTagIds = DB::table('deck_folder')
             ->where('folder_id', $folder->id)
             ->whereNotNull('tag_id')
             ->pluck('tag_id');

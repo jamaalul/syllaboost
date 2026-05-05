@@ -35,6 +35,7 @@ class AuthenticatedSessionController extends Controller
         Mail::to($request->email)->send(new SendOtpMail($otp));
 
         session()->put('email', $request->email);
+
         return redirect()->route('otp.show');
     }
 

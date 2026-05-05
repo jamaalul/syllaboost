@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SendOtpMail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 
 class OtpController extends Controller
@@ -27,8 +29,8 @@ class OtpController extends Controller
         ]);
 
         $email = $request->session()->get('email');
-        
-        if (!$email) {
+
+        if (! $email) {
             return redirect()->route('login');
         }
         $cachedOtp = Cache::get('otp_'.$email);
@@ -66,8 +68,8 @@ class OtpController extends Controller
         $email = $request->session()->get('email');
         $otp = (string) random_int(100000, 999999);
         Cache::put('otp_'.$email, $otp, now()->addMinutes(10));
-        
-        \Illuminate\Support\Facades\Mail::to($email)->send(new \App\Mail\SendOtpMail($otp));
+
+        Mail::to($email)->send(new SendOtpMail($otp));
 
         return back()->with('status', 'A new code has been sent to your email.');
     }
