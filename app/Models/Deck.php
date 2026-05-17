@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-#[Fillable(['user_id', 'name', 'slug', 'description', 'is_public'])]
+#[Fillable(['user_id', 'name', 'slug', 'description', 'is_public', 'fork_count'])]
 class Deck extends Model
 {
     protected static function booted(): void

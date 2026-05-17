@@ -24,3 +24,4 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 require __DIR__.'/deck.php';
 require __DIR__.'/folder.php';
+require __DIR__.'/community.php';
