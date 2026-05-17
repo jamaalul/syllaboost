@@ -23,7 +23,7 @@
             </div>
         </div>
         <form action="{{ route('decks.store') }}" class="flex flex-col gap-12 w-full" method="POST"
-            x-data="{ name: '', description: '', is_public: false, isSubmitting: false, cards: [{ front_content: '', back_content: '' }], addCard() { this.cards.unshift({ front_content: '', back_content: '' }); }, removeCard(index) { if (this.cards.length > 1) { this.cards.splice(index, 1); } }, get isValid() { return this.name.trim() !== '' && this.cards.every(c => c.front_content.trim() !== '' && c.back_content.trim() !== ''); } }"
+            x-data="{ name: '', description: '', is_public: true, isSubmitting: false, cards: [{ front_content: '', back_content: '' }], addCard() { this.cards.unshift({ front_content: '', back_content: '' }); }, removeCard(index) { if (this.cards.length > 1) { this.cards.splice(index, 1); } }, get isValid() { return this.name.trim() !== '' && this.cards.every(c => c.front_content.trim() !== '' && c.back_content.trim() !== ''); } }"
             @submit="isSubmitting = true">
             @csrf
             <div class="flex flex-col gap-6 bg-zinc-100 p-6 rounded-3xl w-full">

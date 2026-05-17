@@ -10,7 +10,7 @@
                                         {
                                           "name": "Deck Name",
                                           "description": "Short description of the material",
-                                          "is_public": false,
+                                          "is_public": true,
                                           "cards": [
                                             { "front": "Prompt", "back": "Answer" }
                                           ]
