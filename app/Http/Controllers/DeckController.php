@@ -19,14 +19,27 @@ class DeckController extends Controller
     {
         $search = $request->query('search');
 
-        $decks = Deck::where('user_id', auth()->id())
+        $decks = Deck::select('decks.*')
+            ->where('decks.user_id', auth()->id())
             ->when($search, function ($query, $search) {
                 return $query->where(function ($q) use ($search) {
-                    $q->where('name', 'like', "%{$search}%")
-                        ->orWhere('description', 'like', "%{$search}%");
+                    $q->where('decks.name', 'like', "%{$search}%")
+                        ->orWhere('decks.description', 'like', "%{$search}%");
                 });
             })
-            ->withCount('cards')
+            ->withCount([
+                'cards',
+                'cards as studied_cards_count' => function ($query) {
+                    $query->where(function ($sub) {
+                        $sub->select('rating')
+                            ->from('card_rating_logs')
+                            ->whereColumn('card_rating_logs.card_id', 'cards.id')
+                            ->where('card_rating_logs.user_id', auth()->id())
+                            ->latest('rated_at')
+                            ->limit(1);
+                    }, 'learned');
+                },
+            ])
             ->latest()
             ->paginate(9)
             ->withQueryString();

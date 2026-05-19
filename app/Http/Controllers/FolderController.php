@@ -34,7 +34,19 @@ class FolderController extends Controller
             ->when($tagId, function ($query, $tagId) {
                 return $query->where('deck_folder.tag_id', $tagId);
             })
-            ->withCount('cards')
+            ->withCount([
+                'cards',
+                'cards as studied_cards_count' => function ($query) {
+                    $query->where(function ($sub) {
+                        $sub->select('rating')
+                            ->from('card_rating_logs')
+                            ->whereColumn('card_rating_logs.card_id', 'cards.id')
+                            ->where('card_rating_logs.user_id', auth()->id())
+                            ->latest('rated_at')
+                            ->limit(1);
+                    }, 'learned');
+                },
+            ])
             ->latest()
             ->paginate(9)
             ->withQueryString();

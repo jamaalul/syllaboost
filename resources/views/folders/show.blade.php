@@ -8,7 +8,7 @@
 
         <!-- Folder Header -->
         <div class="flex flex-col justify-between items-start">
-            <div class="flex flex-col flex-1 gap-4">
+            <div class="flex flex-col flex-1 gap-4 w-full">
                 @php
                     $colors = [
                         ['bg' => 'bg-sky-100', 'text' => 'text-sky-600', 'icon' => 'bg-sky-500', 'focus' => 'focus:outline-sky-600'],
@@ -44,7 +44,7 @@
 
                 <!-- Edit Mode -->
                 <form x-show="editing" style="display: none;" action="{{ route('folders.update', $folder->slug) }}"
-                    method="POST" class="w-2xl" x-data="{ isSubmitting: false }" @submit="isSubmitting = true">
+                    method="POST" class="w-auto max-w-2xl" x-data="{ isSubmitting: false }" @submit="isSubmitting = true">
                     @csrf
                     @method('PUT')
                     <div class="space-y-4">
@@ -62,7 +62,7 @@
                                 class="bg-white px-3 py-2 border border-zinc-300 rounded-lg {{ $color['focus'] }} w-full">{{ old('description', $folder->description) }}</textarea>
                             @error('description')<p class="mt-1 text-red-500 text-sm">{{ $message }}</p>@enderror
                         </div>
-                        <div class="flex gap-2">
+                        <div class="flex justify-end gap-2">
                             <button type="button" @click="editing = false"
                                 class="hover:bg-zinc-100 px-4 py-2 rounded-full font-medium text-zinc-700 transition-colors cursor-pointer">Cancel</button>
                             <button type="submit" :disabled="isSubmitting || !isValid"
@@ -175,6 +175,8 @@
                         ];
                         $deckColor = $deckColors[$deck->id % count($deckColors)];
 
+                        $progress = $deck->cards_count > 0 ? min(100, (int) round(($deck->studied_cards_count / $deck->cards_count) * 100)) : 0;
+
                         $tagName = null;
                         if ($deck->pivot && $deck->pivot->tag_id) {
                             $tag = $tags->firstWhere('id', $deck->pivot->tag_id);
@@ -222,11 +224,22 @@
                         <h3 class="mb-2 font-bold text-zinc-950 text-xl truncate">
                             {{ str($deck->name)->limit(40) }}
                         </h3>
-                        <p class="mb-2 text-zinc-500 text-sm line-clamp-2 grow">
+                        <p class="mb-4 text-zinc-500 text-sm line-clamp-2 grow">
                             {{ str($deck->description ?? 'No description provided for this deck.')->limit(120) }}
                         </p>
 
-                        <div class="flex justify-between items-center mt-auto pt-5 border-zinc-200 border-t">
+                        <div class="mb-4 w-full">
+                            <div class="flex justify-between items-center mb-1.5 text-xs">
+                                <span class="font-medium text-zinc-500">Progress</span>
+                                <span class="font-medium text-zinc-900">{{ $progress }}%</span>
+                            </div>
+                            <div class="bg-zinc-200/80 rounded-full w-full h-1.5 overflow-hidden">
+                                <div class="{{ $deckColor['icon'] }} h-full rounded-full transition-all duration-500"
+                                    style="width: {{ $progress }}%"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center pt-5 border-zinc-200/60 border-t">
                             <div class="flex items-center text-zinc-600">
                                 <svg class="mr-1.5 w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

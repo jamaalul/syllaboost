@@ -51,6 +51,8 @@
                             ['bg' => 'bg-indigo-100', 'text' => 'text-indigo-600', 'icon' => 'bg-indigo-500'],
                         ];
                         $color = $colors[$deck->id % count($colors)];
+                        
+                        $progress = $deck->cards_count > 0 ? min(100, (int) round(($deck->studied_cards_count / $deck->cards_count) * 100)) : 0;
                     @endphp
                     <div class="group relative flex flex-col bg-zinc-100 p-4 rounded-3xl h-full overflow-hidden">
 
@@ -94,11 +96,21 @@
                         <h3 class="mb-2 font-bold text-zinc-950 text-xl truncate">
                             {{ str($deck->name)->limit(40) }}
                         </h3>
-                        <p class="mb-2 text-zinc-500 text-sm line-clamp-2 grow">
+                        <p class="mb-4 text-zinc-500 text-sm line-clamp-2 grow">
                             {{ str($deck->description ?? 'No description provided for this deck.')->limit(120) }}
                         </p>
 
-                        <div class="flex justify-between items-center mt-auto pt-5 border-zinc-100 border-t">
+                        <div class="mb-4 w-full">
+                            <div class="flex justify-between items-center mb-1.5 text-xs">
+                                <span class="font-medium text-zinc-500">Progress</span>
+                                <span class="font-medium text-zinc-900">{{ $progress }}%</span>
+                            </div>
+                            <div class="bg-zinc-200/80 rounded-full w-full h-1.5 overflow-hidden">
+                                <div class="{{ $color['icon'] }} h-full rounded-full transition-all duration-500" style="width: {{ $progress }}%"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center pt-5 border-zinc-200/60 border-t">
                             <div class="flex items-center text-zinc-600">
                                 <svg class="mr-1.5 size-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
