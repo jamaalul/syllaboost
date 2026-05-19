@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class TrackLastActivity
@@ -15,9 +17,9 @@ class TrackLastActivity
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (\Illuminate\Support\Facades\Auth::check() && $request->user() instanceof \App\Models\User) {
+        if (Auth::check() && $request->user() instanceof User) {
             $user = $request->user();
-            
+
             if (! $user->last_login_at || $user->last_login_at->diffInDays(now()) >= 1) {
                 $user->updateQuietly(['last_login_at' => now()]);
             }

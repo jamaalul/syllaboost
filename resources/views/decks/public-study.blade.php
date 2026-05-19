@@ -28,16 +28,11 @@
     <div id="card-slider" class="relative flex justify-center items-center bg-zinc-100 w-screen h-dvh" tabindex="0">
 
         {{-- stack decoration (ghost layers behind) --}}
-        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl h-[60vh] aspect-2/3 translate-y-4">
-        </div>
-        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl h-[60vh] aspect-2/3 translate-y-3">
-        </div>
-        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl h-[60vh] aspect-2/3 translate-y-2">
-        </div>
-        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl h-[60vh] aspect-2/3 translate-y-1">
-        </div>
-        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl h-[60vh] aspect-2/3">
-        </div>
+        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl h-[60vh] aspect-2/3 translate-y-4"></div>
+        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl h-[60vh] aspect-2/3 translate-y-3"></div>
+        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl h-[60vh] aspect-2/3 translate-y-2"></div>
+        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl h-[60vh] aspect-2/3 translate-y-1"></div>
+        <div class="z-10 absolute bg-white border border-zinc-200 rounded-3xl h-[60vh] aspect-2/3"></div>
 
         {{--
         Three fixed, named DOM nodes — A, B, C — always present, never recreated.
@@ -54,8 +49,7 @@
                     <div class="relative p-6 rounded-3xl card-face card-front">
                         <p class="font-bold text-zinc-950 text-2xl card-front-text"></p>
                         <span class="right-6 bottom-6 absolute text-zinc-200">
-                            <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"
-                                class="size-7">
+                            <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" class="size-7">
                                 <path d="{{ $logo }}" fill="currentColor" />
                             </svg>
                         </span>
@@ -64,8 +58,7 @@
                     <div class="{{ $color }} p-6 relative rounded-3xl card-face card-back">
                         <p class="font-bold text-white text-2xl card-back-text"></p>
                         <span class="right-6 bottom-6 absolute text-white">
-                            <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"
-                                class="size-7">
+                            <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" class="size-7">
                                 <path d="{{ $logo }}" fill="currentColor" />
                             </svg>
                         </span>
@@ -104,10 +97,10 @@
         <div class="bottom-8 absolute flex items-center gap-2 text-zinc-500 text-sm select-none">
             <div id="hint-desktop" class="hidden md:flex items-center gap-2">
                 <kbd class="bg-white shadow-sm px-2 py-1 border border-zinc-300 rounded-md font-mono text-xs">←</kbd>
-                <span>Prev</span>
+                <span>Still Learning</span>
                 <span class="text-zinc-300">|</span>
                 <kbd class="bg-white shadow-sm px-2 py-1 border border-zinc-300 rounded-md font-mono text-xs">→</kbd>
-                <span>Next</span>
+                <span>Learned</span>
                 <span class="text-zinc-300">|</span>
                 <kbd class="bg-white shadow-sm px-2 py-1 border border-zinc-300 rounded-md font-mono text-xs">Space</kbd>
                 <span>Reveal</span>
@@ -115,36 +108,60 @@
             <div id="hint-mobile" class="hidden items-center gap-2">
                 <span class="flex items-center gap-1">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
-                        <path fill-rule="evenodd"
-                            d="M10 2a.75.75 0 0 1 .75.75v12.59l1.95-2.1a.75.75 0 1 1 1.1 1.02l-3.25 3.5a.75.75 0 0 1-1.1 0l-3.25-3.5a.75.75 0 1 1 1.1-1.02l1.95 2.1V2.75A.75.75 0 0 1 10 2Z"
-                            clip-rule="evenodd" />
+                        <path fill-rule="evenodd" d="M13.2 2.24a.75.75 0 0 0 .04 1.06l2.1 1.95H6.75a.75.75 0 0 0 0 1.5h8.59l-2.1 1.95a.75.75 0 1 0 1.02 1.1l3.5-3.25a.75.75 0 0 0 0-1.1l-3.5-3.25a.75.75 0 0 0-1.06.04Zm-6.4 8a.75.75 0 0 0-1.06-.04l-3.5 3.25a.75.75 0 0 0 0 1.1l3.5 3.25a.75.75 0 1 0 1.02-1.1l-2.1-1.95h8.59a.75.75 0 0 0 0-1.5H4.66l2.1-1.95a.75.75 0 0 0 .04-1.06Z" clip-rule="evenodd" />
                     </svg>
-                    Prev
+                    Swipe to Rate
                 </span>
                 <span class="text-zinc-300">|</span>
-                <span class="flex items-center gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
-                        <path fill-rule="evenodd"
-                            d="M10 18a.75.75 0 0 1-.75-.75V4.66L7.3 6.76a.75.75 0 0 1-1.1-1.02l3.25-3.5a.75.75 0 0 1 1.1 0l3.25 3.5a.75.75 0 1 1-1.1 1.02l-1.95-2.1v12.59A.75.75 0 0 1 10 18Z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    Next
-                </span>
-                <span class="text-zinc-300">|</span>
-                <span class="flex items-center gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59" />
-                    </svg>
-                    /
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
-                        <path fill-rule="evenodd"
-                            d="M13.2 2.24a.75.75 0 0 0 .04 1.06l2.1 1.95H6.75a.75.75 0 0 0 0 1.5h8.59l-2.1 1.95a.75.75 0 1 0 1.02 1.1l3.5-3.25a.75.75 0 0 0 0-1.1l-3.5-3.25a.75.75 0 0 0-1.06.04Zm-6.4 8a.75.75 0 0 0-1.06-.04l-3.5 3.25a.75.75 0 0 0 0 1.1l3.5 3.25a.75.75 0 1 0 1.02-1.1l-2.1-1.95h8.59a.75.75 0 0 0 0-1.5H4.66l2.1-1.95a.75.75 0 0 0 .04-1.06Z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    Flip
-                </span>
+                <span>Tap: Reveal</span>
+            </div>
+        </div>
+
+        {{-- Visual feedback pop-up --}}
+        <div id="visual-feedback" class="top-1/9 z-[1000] absolute opacity-0 transition-opacity duration-200 pointer-events-none">
+            <span id="visual-feedback-text"></span>
+        </div>
+
+        {{-- Session summary overlay --}}
+        <div id="summary-overlay"
+            class="hidden z-[100] absolute inset-0 flex justify-center items-center bg-white/20 backdrop-blur-xs">
+            <div class="flex flex-col items-center gap-6 p-4 w-full max-w-sm">
+                <div class="text-center">
+                    <p class="mb-1 font-medium text-zinc-400 text-sm uppercase tracking-widest">Session Complete</p>
+                    <h2 class="font-bold text-zinc-900 text-2xl">{{ $deck->name }}</h2>
+                </div>
+                <div class="flex flex-col gap-3 w-full">
+                    <div class="flex justify-between items-center rounded-2xl">
+                        <span class="flex items-center gap-2 font-semibold text-emerald-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                            Learned
+                        </span>
+                        <span id="summary-learned" class="font-bold text-emerald-700 text-2xl">0</span>
+                    </div>
+                    <div class="flex justify-between items-center rounded-2xl">
+                        <span class="flex items-center gap-2 font-semibold text-amber-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3" />
+                            </svg>
+                            Still Learning
+                        </span>
+                        <span id="summary-still" class="font-bold text-amber-700 text-2xl">0</span>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-3 w-full">
+                    <button id="btn-study-again"
+                        class="flex-1 {{ $color }} hover:opacity-90 py-3 rounded-2xl font-semibold text-white transition-colors cursor-pointer">
+                        Review Again
+                    </button>
+                    @if (Auth::user())   
+                        <a href="{{ route('community.index') }}"
+                            class="flex flex-1 justify-center items-center bg-zinc-200 hover:bg-zinc-300 py-3 rounded-2xl font-semibold text-zinc-800 transition-colors cursor-pointer">
+                            See Other Decks
+                        </a>
+                    @endif
+                </div>
             </div>
         </div>
 
@@ -169,208 +186,153 @@
             -webkit-backface-visibility: hidden;
         }
 
-        .card-front {
-            background: white;
-        }
+        .card-front { background: white; }
+        .card-back  { transform: rotateY(180deg); }
 
-        .card-back {
-            transform: rotateY(180deg);
-        }
-
-        /* Desktop (X axis) */
+        /* ── Right-exit (Learned) ─────────────────────────────── */
         .card-item.slide-out-right {
             animation: slide-out-right 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
-
         .card-item.slide-in-left {
             animation: slide-in-left 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
-        .card-item.rise-right {
-            animation: rise-right 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        .card-item.slide-in-right {
-            animation: slide-in-right 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
         @keyframes slide-out-right {
-            0% {
-                transform: translateX(0) rotate(0deg);
-            }
-
-            100% {
-                transform: translateX(120%) rotate(5deg);
-            }
+            0%   { transform: translateX(0) rotate(0deg); }
+            100% { transform: translateX(120%) rotate(5deg); }
         }
-
         @keyframes slide-in-left {
-            0% {
-                transform: translateX(120%) rotate(5deg);
-            }
-
-            100% {
-                transform: translateX(0) rotate(0deg);
-                opacity: 0;
-                z-index: -10;
-            }
+            0%   { transform: translateX(120%) rotate(5deg); }
+            100% { transform: translateX(0) rotate(0deg); opacity: 0; z-index: -10; }
         }
+
+        /* ── Left-exit (Still Learning) ──────────────────────── */
+        .card-item.slide-out-left {
+            animation: slide-out-left 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .card-item.snap-back-right {
+            animation: snap-back-right 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes slide-out-left {
+            0%   { transform: translateX(0) rotate(0deg); }
+            100% { transform: translateX(-120%) rotate(-5deg); }
+        }
+        @keyframes snap-back-right {
+            0%   { transform: translateX(-120%) rotate(-5deg); }
+            100% { transform: translateX(0) rotate(0deg); opacity: 0; z-index: -10; }
+        }
+
+        /* ── Unused legacy animations (kept for compatibility) ── */
+        .card-item.rise-right     { animation: rise-right     0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        .card-item.slide-in-right { animation: slide-in-right 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 
         @keyframes rise-right {
-            0% {
-                transform: translateX(0) rotate(0deg);
-                opacity: 0;
-            }
-
-            20% {
-                opacity: 0;
-            }
-
-            100% {
-                transform: translateX(120%) rotate(5deg);
-                opacity: 1;
-            }
+            0%   { transform: translateX(0) rotate(0deg); opacity: 0; }
+            20%  { opacity: 0; }
+            100% { transform: translateX(120%) rotate(5deg); opacity: 1; }
         }
-
         @keyframes slide-in-right {
-            0% {
-                transform: translateX(120%) rotate(5deg);
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateX(0) rotate(0deg);
-                opacity: 1;
-            }
-        }
-
-        /* Mobile (Y axis) */
-        .card-item.slide-out-up {
-            animation: slide-out-up 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        .card-item.slide-in-down {
-            animation: slide-in-down 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        .card-item.rise-up {
-            animation: rise-up 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        .card-item.slide-in-up {
-            animation: slide-in-up 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        @keyframes slide-out-up {
-            0% {
-                transform: translateY(0) rotate(0deg);
-            }
-
-            100% {
-                transform: translateY(-120%) rotate(-5deg);
-            }
-        }
-
-        @keyframes slide-in-down {
-            0% {
-                transform: translateY(-120%) rotate(-5deg);
-            }
-
-            100% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0;
-                z-index: -10;
-            }
-        }
-
-        @keyframes rise-up {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0;
-            }
-
-            20% {
-                opacity: 0;
-            }
-
-            100% {
-                transform: translateY(-120%) rotate(-5deg);
-                opacity: 1;
-            }
-        }
-
-        @keyframes slide-in-up {
-            0% {
-                transform: translateY(-120%) rotate(-5deg);
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-            }
+            0%   { transform: translateX(120%) rotate(5deg); opacity: 1; }
+            100% { transform: translateX(0) rotate(0deg); opacity: 1; }
         }
     </style>
 
     <script>
         (() => {
-            const DURATION = 300;
+            const DURATION        = 300;
             const SWIPE_THRESHOLD = 50;
-            const isMobile = () => window.matchMedia('(pointer: coarse)').matches;
+            const DECK_ID         = '{{ $deck->id }}';
 
-            // ── All card data — plain JS, never touches the DOM ──────────────────
-            const ALL_CARDS = @json(collect($cards)->map(fn($c) => [
-                'front' => $c->front_content,
-                'back' => $c->back_content,
-            ]));
+            // ── Card data (includes id for localStorage key) ──────────────────
+            @php
+                $mappedCards = collect($cards)->map(fn($c) => [
+                    'id'    => $c->id,
+                    'front' => $c->front_content,
+                    'back'  => $c->back_content,
+                ])->values()->all();
+            @endphp
+            const ALL_CARDS = @json($mappedCards);
             const TOTAL = ALL_CARDS.length;
-            const wrap = i => ((i % TOTAL) + TOTAL) % TOTAL;
+            const wrap  = i => ((i % TOTAL) + TOTAL) % TOTAL;
 
-            // ── Three physical DOM nodes (fixed, never recreated) ─────────────────
+            // ── localStorage helpers ──────────────────────────────────────────
+            const LS_KEY = `deck_ratings_${DECK_ID}`;
+
+            function submitRatingLocal(cardId, rating) {
+                const existing = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+                existing.push({ card_id: cardId, rating, rated_at: new Date().toISOString() });
+                localStorage.setItem(LS_KEY, JSON.stringify(existing));
+            }
+
+            function computeSummaryCounts() {
+                const logs = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+                const latest = {};
+                logs.forEach(entry => { latest[entry.card_id] = entry.rating; });
+                const ratings = Object.values(latest);
+                return {
+                    learned:       ratings.filter(r => r === 'learned').length,
+                    stillLearning: ratings.filter(r => r === 'still_learning').length,
+                };
+            }
+
+            function resolveStartIndex() {
+                const logs = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+                if (logs.length === 0) return 0;
+                const lastCardId = logs[logs.length - 1].card_id;
+                const position   = ALL_CARDS.findIndex(c => c.id == lastCardId);
+                return position !== -1 ? position + 1 : 0;
+            }
+
+            // ── DOM nodes ─────────────────────────────────────────────────────
             const nodes = ['a', 'b', 'c'].map(id => document.getElementById('card-node-' + id));
 
-            // ── Role pointer ──────────────────────────────────────────────────────
-            // roles is always a permutation of [0, 1, 2].
-            // roles[0] → node index currently acting as 'prev'
-            // roles[1] → node index currently acting as 'current'
-            // roles[2] → node index currently acting as 'next'
-            //
-            // Advancing: rotate left  → [p,c,n] becomes [c,n,p]  (old prev recycles as next)
-            // Going back: rotate right → [p,c,n] becomes [n,p,c]  (old next recycles as prev)
+            // ── Role pointer ──────────────────────────────────────────────────
             let roles = [0, 1, 2];
-
-            const nodeForRole = r => nodes[roles[r]]; // r: 0=prev, 1=current, 2=next
+            const nodeForRole = r => nodes[roles[r]];
             const flipForRole = r => nodeForRole(r).querySelector('.card-flip-inner');
 
-            // ── Write card content into a node (call only when node is off-screen) ─
+            // ── Write card content (call only when node is off-screen) ────────
             function writeCard(nodeIdx, cardIdx) {
                 const node = nodes[nodeIdx];
                 const card = ALL_CARDS[wrap(cardIdx)];
                 node.querySelector('.card-front-text').textContent = card.front;
-                node.querySelector('.card-back-text').textContent = card.back;
+                node.querySelector('.card-back-text').textContent  = card.back;
             }
 
             function applyZIndices() {
-                nodeForRole(1).style.zIndex = '25'; // current — on top
-                nodeForRole(2).style.zIndex = '22'; // next    — just below
-                nodeForRole(0).style.zIndex = '20'; // prev    — hidden underneath
+                nodeForRole(1).style.zIndex = '25';
+                nodeForRole(2).style.zIndex = '22';
+                nodeForRole(0).style.zIndex = '20';
             }
 
-            // ── State ─────────────────────────────────────────────────────────────
-            let topIndex = 0;
+            // ── State ─────────────────────────────────────────────────────────
+            let topIndex  = resolveStartIndex();
             let animating = false;
-            let revealed = false;
+            let revealed  = false;
 
-            // ── Bootstrap ─────────────────────────────────────────────────────────
+            // ── Bootstrap ─────────────────────────────────────────────────────
             function boot() {
-                writeCard(roles[0], topIndex - 1); // prev
-                writeCard(roles[1], topIndex);     // current
-                writeCard(roles[2], topIndex + 1); // next
+                animating = false;
+                revealed  = false;
+                roles     = [0, 1, 2];
+
+                nodes.forEach(n => {
+                    const fl = n.querySelector('.card-flip-inner');
+                    fl.style.transition = 'none';
+                    fl.classList.remove('is-flipped');
+                    fl.offsetHeight;
+                    fl.style.transition = '';
+                });
+
+                writeCard(roles[0], topIndex - 1);
+                writeCard(roles[1], topIndex);
+                writeCard(roles[2], topIndex + 1);
                 applyZIndices();
                 updateCounter();
             }
 
-            // ── Flip ──────────────────────────────────────────────────────────────
+            // ── Flip ──────────────────────────────────────────────────────────
             function reveal() {
                 if (animating) return;
                 revealed = !revealed;
@@ -381,26 +343,63 @@
                 const flip = flipForRole(1);
                 flip.style.transition = 'none';
                 flip.classList.remove('is-flipped');
-                flip.offsetHeight; // force reflow
+                flip.offsetHeight;
                 flip.style.transition = '';
                 revealed = false;
             }
 
-            // ── next() ────────────────────────────────────────────────────────────
-            // Mirrors prev() — two phases on CURRENT only.
-            // Phase 1: current flies out (slide-out-right / slide-out-up).
-            // Phase 2: current snaps back invisible via slide-in-left / slide-in-down
-            //          (the keyframe ends at opacity:0 z-index:-10, so it's hidden).
-            // The NEXT node is already underneath and is revealed as current leaves.
-            // After phase 2: rotate roles, write new PREV into the recycled node.
-            function next() {
-                if (animating || TOTAL < 2) return;
+            // ── Summary screen ────────────────────────────────────────────────
+            const summaryOverlay = document.getElementById('summary-overlay');
+            const summaryLearned = document.getElementById('summary-learned');
+            const summaryStill   = document.getElementById('summary-still');
+
+            function showSummary() {
+                const { learned, stillLearning } = computeSummaryCounts();
+                summaryLearned.textContent = learned;
+                summaryStill.textContent   = stillLearning;
+                summaryOverlay.classList.remove('hidden');
+            }
+
+            document.getElementById('btn-study-again').addEventListener('click', () => {
+                // Clear localStorage ratings for this deck so session starts fresh
+                localStorage.removeItem(LS_KEY);
+                summaryOverlay.classList.add('hidden');
+                topIndex = 0;
+                boot();
+            });
+
+            // ── rateAndNext() ─────────────────────────────────────────────────
+            function rateAndNext(direction) {
+                if (animating || TOTAL === 0) return;
                 animating = true;
                 unflipCurrent();
 
-                const mobile = isMobile();
-                const outCls = mobile ? 'slide-out-up' : 'slide-out-right';
-                const inCls = mobile ? 'slide-in-down' : 'slide-in-left';
+                const feedbackEl = document.getElementById('visual-feedback');
+                const feedbackTextEl = document.getElementById('visual-feedback-text');
+                
+                if (direction === 'learned') {
+                    feedbackTextEl.textContent = 'Learned';
+                    feedbackTextEl.className = 'text-emerald-600 font-bold text-4xl';
+                } else {
+                    feedbackTextEl.textContent = 'Still Learning';
+                    feedbackTextEl.className = 'text-yellow-500 font-bold text-4xl';
+                }
+                
+                feedbackEl.classList.remove('opacity-0');
+                feedbackEl.classList.add('opacity-100');
+                
+                if (window.feedbackTimeout) clearTimeout(window.feedbackTimeout);
+                window.feedbackTimeout = setTimeout(() => {
+                    feedbackEl.classList.remove('opacity-100');
+                    feedbackEl.classList.add('opacity-0');
+                }, 500);
+
+                const card   = ALL_CARDS[wrap(topIndex)];
+                const outCls = direction === 'learned' ? 'slide-out-right' : 'slide-out-left';
+                const inCls  = direction === 'learned' ? 'slide-in-left'   : 'snap-back-right';
+
+                // Fire-and-forget — does NOT block animation
+                submitRatingLocal(card.id, direction);
 
                 const curEl = nodeForRole(1);
                 curEl.style.zIndex = '9999';
@@ -415,13 +414,16 @@
                         curEl.classList.remove(inCls);
                         curEl.style.zIndex = '';
 
-                        // Rotate left: [p,c,n] → [c,n,p]
-                        roles = [roles[1], roles[2], roles[0]];
-                        topIndex = wrap(topIndex + 1);
+                        roles    = [roles[1], roles[2], roles[0]];
+                        topIndex = topIndex + 1;
 
-                        // Recycled node is now roles[2] — the new NEXT slot
+                        if (topIndex >= TOTAL) {
+                            animating = false;
+                            showSummary();
+                            return;
+                        }
+
                         writeCard(roles[2], topIndex + 1);
-
                         applyZIndices();
                         updateCounter();
                         animating = false;
@@ -429,108 +431,74 @@
                 }, DURATION);
             }
 
-            // ── prev() ────────────────────────────────────────────────────────────
-            // The PREV node is already rendered but hidden behind CURRENT.
-            // Rotate roles right first so the old PREV node becomes CURRENT,
-            // then animate it sliding in.
-            // Silently write new PREV content into the recycled node
-            // now in the PREV role (the old NEXT, which is behind/under).
-            function prev() {
-                if (animating || TOTAL < 2) return;
-                animating = true;
-                unflipCurrent();
-
-                const mobile = isMobile();
-                const riseCls = mobile ? 'rise-up' : 'rise-right';
-                const slideInCls = mobile ? 'slide-in-up' : 'slide-in-right';
-
-                // Rotate right: [p,c,n] → [n,p,c]
-                roles = [roles[2], roles[0], roles[1]];
-                topIndex = wrap(topIndex - 1);
-
-                // Recycled node is now roles[0] — the new PREV slot
-                writeCard(roles[0], topIndex - 1);
-
-                const inEl = nodeForRole(1);
-                inEl.style.zIndex = '5';
-                inEl.classList.add(riseCls);
-                applyZIndices();
-
-                setTimeout(() => {
-                    inEl.classList.remove(riseCls);
-                    inEl.style.zIndex = '9999';
-                    inEl.classList.add(slideInCls);
-
-                    setTimeout(() => {
-                        inEl.classList.remove(slideInCls);
-                        applyZIndices();
-                        updateCounter();
-                        animating = false;
-                    }, DURATION);
-                }, DURATION);
-            }
-
-            // ── Counter ───────────────────────────────────────────────────────────
+            // ── Counter ───────────────────────────────────────────────────────
             const counter = document.getElementById('card-counter');
             function updateCounter() {
+                if (TOTAL === 0) { counter.textContent = ''; return; }
                 counter.textContent = `${topIndex + 1} / ${TOTAL}`;
             }
 
-            // ── Keyboard ──────────────────────────────────────────────────────────
+            // ── Keyboard ──────────────────────────────────────────────────────
             document.addEventListener('keydown', e => {
-                if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
-                else if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
-                else if (e.key === ' ') { e.preventDefault(); reveal(); }
+                if (topIndex >= TOTAL) return;
+                if (e.key === 'ArrowRight')      { e.preventDefault(); rateAndNext('learned'); }
+                else if (e.key === 'ArrowLeft')  { e.preventDefault(); rateAndNext('still_learning'); }
+                else if (e.key === ' ')          { e.preventDefault(); reveal(); }
             });
 
-            // ── Touch ─────────────────────────────────────────────────────────────
+            // ── Touch ─────────────────────────────────────────────────────────
             const slider = document.getElementById('card-slider');
             let touchStartX = 0, touchStartY = 0, intentLocked = null;
 
             slider.addEventListener('touchstart', e => {
-                touchStartX = e.touches[0].clientX;
-                touchStartY = e.touches[0].clientY;
+                if (topIndex >= TOTAL) return;
+                touchStartX  = e.touches[0].clientX;
+                touchStartY  = e.touches[0].clientY;
                 intentLocked = null;
             }, { passive: true });
 
             slider.addEventListener('touchmove', e => {
-                if (!isMobile()) return;
+                if (topIndex >= TOTAL) return;
                 const dx = e.touches[0].clientX - touchStartX;
                 const dy = e.touches[0].clientY - touchStartY;
                 if (!intentLocked && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
-                    intentLocked = Math.abs(dy) > Math.abs(dx) ? 'vertical' : 'horizontal';
+                    intentLocked = Math.abs(dx) > Math.abs(dy) ? 'horizontal' : 'vertical';
                 }
-                if (intentLocked === 'vertical') e.preventDefault();
+                if (intentLocked === 'horizontal') e.preventDefault();
             }, { passive: false });
 
             slider.addEventListener('touchend', e => {
-                if (!isMobile()) return;
+                if (topIndex >= TOTAL) return;
                 const dx = e.changedTouches[0].clientX - touchStartX;
                 const dy = e.changedTouches[0].clientY - touchStartY;
+
                 if (Math.abs(dx) < SWIPE_THRESHOLD && Math.abs(dy) < SWIPE_THRESHOLD) {
                     reveal(); return;
                 }
-                if (intentLocked === 'horizontal' && Math.abs(dx) > SWIPE_THRESHOLD) {
-                    reveal();
-                } else if (intentLocked === 'vertical') {
-                    if (dy < -SWIPE_THRESHOLD) next();
-                    else if (dy > SWIPE_THRESHOLD) prev();
+
+                if (intentLocked === 'horizontal' && Math.abs(dx) >= SWIPE_THRESHOLD) {
+                    if (dx > 0) { rateAndNext('learned'); }
+                    else        { rateAndNext('still_learning'); }
                 }
+                // Vertical swipes are intentionally unbound
             }, { passive: true });
 
-            // ── Hint bar ──────────────────────────────────────────────────────────
+            // ── Hint bar ──────────────────────────────────────────────────────
             const isTouch = (
                 ('ontouchstart' in window || navigator.maxTouchPoints > 0) &&
                 window.matchMedia('(pointer: coarse)').matches
             );
-
             document.getElementById('hint-desktop').classList.toggle('hidden', isTouch);
             const hintMobile = document.getElementById('hint-mobile');
             hintMobile.classList.toggle('hidden', !isTouch);
             hintMobile.classList.toggle('flex', isTouch);
 
-            // ── Go ────────────────────────────────────────────────────────────────
-            boot();
+            // ── Go ────────────────────────────────────────────────────────────
+            if (TOTAL === 0 || topIndex >= TOTAL) {
+                showSummary();
+            } else {
+                boot();
+            }
         })();
     </script>
 @endsection

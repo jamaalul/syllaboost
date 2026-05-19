@@ -1,7 +1,12 @@
 <?php
 
 use App\Http\Controllers\DeckController;
+use App\Http\Controllers\RatingController;
 use Illuminate\Support\Facades\Route;
+
+Route::middleware('auth')->group(function () {
+    Route::post('/ratings', [RatingController::class, 'store'])->name('ratings.store');
+});
 
 Route::middleware('auth')->prefix('decks')->controller(DeckController::class)->group(function () {
     Route::get('/', 'index')->name('decks.index');

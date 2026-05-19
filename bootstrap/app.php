@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\TrackLastActivity;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -12,7 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [
-            \App\Http\Middleware\TrackLastActivity::class,
+            TrackLastActivity::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

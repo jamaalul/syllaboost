@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDeckRequest;
 use App\Http\Requests\UpdateDeckRequest;
+use App\Models\CardRatingLog;
 use App\Models\Deck;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
@@ -147,13 +149,35 @@ class DeckController extends Controller
 
     public function study(Deck $deck): View
     {
-        if ($deck->user_id !== auth()->id() && ! $deck->is_public) {
+        if ($deck->user_id !== Auth::id() && ! $deck->is_public) {
             abort(404);
         }
 
-        $cards = $deck->cards()->orderBy('order')->select('front_content', 'back_content', 'order')->get();
+        $cards = $deck->cards()->orderBy('order')->select('id', 'front_content', 'back_content', 'order')->get();
 
-        return view('decks.study', compact('deck', 'cards'));
+        // Compute resume index from the rating log
+        $lastRatedCardId = CardRatingLog::where('user_id', Auth::id())
+            ->where('deck_id', $deck->id)
+            ->latest('rated_at')
+            ->value('card_id');
+
+        $startIndex = 0;
+        if ($lastRatedCardId) {
+            $position = $cards->search(fn ($c) => $c->id === $lastRatedCardId);
+            $startIndex = $position !== false ? $position + 1 : 0;
+        }
+
+        // Pre-compute summary counts (most recent rating per card)
+        $latestRatings = CardRatingLog::where('user_id', Auth::id())
+            ->where('deck_id', $deck->id)
+            ->select('card_id', 'rating')
+            ->latest('rated_at')
+            ->get()
+            ->unique('card_id');
+
+        $previousRatings = $latestRatings->pluck('rating', 'card_id');
+
+        return view('decks.study', compact('deck', 'cards', 'startIndex', 'previousRatings'));
     }
 
     public function publicStudy(Deck $deck): View
@@ -162,7 +186,7 @@ class DeckController extends Controller
             abort(404);
         }
 
-        $cards = $deck->cards()->orderBy('order')->select('front_content', 'back_content', 'order')->get();
+        $cards = $deck->cards()->orderBy('order')->select('id', 'front_content', 'back_content', 'order')->get();
 
         return view('decks.public-study', compact('deck', 'cards'));
     }
