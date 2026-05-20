@@ -15,9 +15,11 @@ Route::middleware('auth')->prefix('decks')->controller(DeckController::class)->g
     Route::post('/', 'store')->name('decks.store');
     Route::post('/json', 'storeFromJson')->name('decks.store.json');
 
+    Route::get('/mixed-study', 'mixedStudy')->name('decks.mixed-study');
     Route::get('{deck:slug}/edit', 'edit')->name('decks.edit');
     Route::put('{deck:slug}', 'update')->name('decks.update');
     Route::get('{deck:slug}/study', 'study')->name('decks.study');
+    Route::get('{deck:slug}/srs-study', 'srsStudy')->name('decks.srs-study');
     Route::delete('{deck:slug}', 'destroy')->name('decks.destroy');
 });
 

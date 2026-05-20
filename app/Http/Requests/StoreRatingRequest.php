@@ -21,6 +21,7 @@ class StoreRatingRequest extends FormRequest
             'card_id' => ['required', 'integer', 'exists:cards,id'],
             'deck_id' => ['required', 'integer', 'exists:decks,id'],
             'rating' => ['required', 'string', Rule::in(['learned', 'still_learning'])],
+            'is_srs' => ['sometimes', 'boolean'],
         ];
     }
 }

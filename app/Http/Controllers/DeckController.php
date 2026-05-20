@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDeckRequest;
 use App\Http\Requests\UpdateDeckRequest;
+use App\Models\Card;
 use App\Models\CardRatingLog;
 use App\Models\Deck;
 use Illuminate\Http\RedirectResponse;
@@ -193,6 +194,37 @@ class DeckController extends Controller
         return view('decks.study', compact('deck', 'cards', 'startIndex', 'previousRatings'));
     }
 
+    public function srsStudy(Deck $deck): View
+    {
+        if ($deck->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $userId = Auth::id();
+
+        $cards = $deck->cards()
+            ->leftJoin('card_study_progresses', function ($join) use ($userId) {
+                $join->on('cards.id', '=', 'card_study_progresses.card_id')
+                    ->where('card_study_progresses.user_id', '=', $userId);
+            })
+            ->where(function ($query) {
+                $query->whereNull('card_study_progresses.id')
+                    ->orWhere('card_study_progresses.next_review_at', '<=', now());
+            })
+            ->orderBy('cards.order')
+            ->select('cards.id', 'cards.front_content', 'cards.back_content', 'cards.order')
+            ->get();
+
+        // Start from index 0 for SRS
+        $startIndex = 0;
+
+        // Still get previous ratings for visual feedback?
+        // For SRS, we might just fetch the box or nothing. Let's pass empty array.
+        $previousRatings = [];
+
+        return view('decks.srs-study', compact('deck', 'cards', 'startIndex', 'previousRatings'));
+    }
+
     public function publicStudy(Deck $deck): View
     {
         if (! $deck->is_public) {
@@ -202,6 +234,35 @@ class DeckController extends Controller
         $cards = $deck->cards()->orderBy('order')->select('id', 'front_content', 'back_content', 'order')->get();
 
         return view('decks.public-study', compact('deck', 'cards'));
+    }
+
+    public function mixedStudy(): View
+    {
+        $userId = Auth::id();
+
+        $cards = Card::whereHas('deck', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })
+            ->leftJoin('card_study_progresses', function ($join) use ($userId) {
+                $join->on('cards.id', '=', 'card_study_progresses.card_id')
+                    ->where('card_study_progresses.user_id', '=', $userId);
+            })
+            ->where(function ($query) {
+                $query->whereNull('card_study_progresses.id')
+                    ->orWhere('card_study_progresses.next_review_at', '<=', now());
+            })
+            ->inRandomOrder()
+            ->limit(20)
+            ->select('cards.id', 'cards.front_content', 'cards.back_content', 'cards.order', 'cards.deck_id')
+            ->get();
+
+        $startIndex = 0;
+        $previousRatings = [];
+
+        // Dummy deck for the view
+        $deck = new Deck(['id' => 0, 'name' => 'Mixed Review', 'user_id' => $userId]);
+
+        return view('decks.mixed-study', compact('deck', 'cards', 'startIndex', 'previousRatings'));
     }
 
     public function destroy(Deck $deck): RedirectResponse

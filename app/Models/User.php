@@ -39,4 +39,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Folder::class)->orderBy('created_at', 'desc');
     }
+
+    public function cardStudyProgresses()
+    {
+        return $this->hasMany(CardStudyProgress::class);
+    }
 }

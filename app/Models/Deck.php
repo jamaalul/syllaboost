@@ -38,4 +38,9 @@ class Deck extends Model
     {
         return $this->belongsToMany(Folder::class)->withPivot('tag_id')->withTimestamps();
     }
+
+    public function cardStudyProgresses()
+    {
+        return $this->hasMany(CardStudyProgress::class);
+    }
 }

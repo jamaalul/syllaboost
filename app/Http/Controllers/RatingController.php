@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreRatingRequest;
 use App\Models\Card;
 use App\Models\CardRatingLog;
+use App\Models\CardStudyProgress;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,6 +33,40 @@ class RatingController extends Controller
             'deck_id' => $validated['deck_id'],
             'rating' => $validated['rating'],
         ]);
+
+        if (isset($validated['is_srs']) && $validated['is_srs']) {
+            $progress = CardStudyProgress::firstOrNew([
+                'user_id' => Auth::id(),
+                'card_id' => $validated['card_id'],
+            ], [
+                'deck_id' => $validated['deck_id'],
+                'box' => 1,
+            ]);
+
+            if ($validated['rating'] === 'learned') {
+                $progress->box = min(5, $progress->box + 1);
+            } else {
+                $progress->box = 1;
+            }
+
+            $intervals = [
+                1 => 1,
+                2 => 3,
+                3 => 7,
+                4 => 14,
+                5 => 30,
+            ];
+
+            $days = $intervals[$progress->box] ?? 1;
+
+            if ($validated['rating'] === 'learned') {
+                $progress->next_review_at = now()->addDays($days);
+            } else {
+                $progress->next_review_at = now();
+            }
+
+            $progress->save();
+        }
 
         return response()->json([
             'success' => true,
