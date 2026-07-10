@@ -30,7 +30,9 @@
     <div class="top-0 left-0 z-10 fixed flex justify-center items-center md:px-4 w-screen h-16 md:h-24">
         <nav class="flex bg-white shadow-sm md:mx-4 p-2 md:p-1 md:rounded-full w-full max-w-5xl h-16 md:h-12">
             <img src="{{ asset('assets/logo.webp') }}" alt="Syllaboost Logo" class="px-4 py-2 h-full">
-            <div class="hidden md:flex ml-auto h-full">
+            <div class="hidden md:flex items-center gap-2 ml-auto px-2 h-full">
+                <a href="{{ route('articles.index') }}"
+                    class="px-3 font-medium text-zinc-600 hover:text-zinc-950 transition">Articles</a>
                 <a href="{{ route('login') }}"
                     class="flex justify-center items-center bg-none px-5 rounded-full w-24 h-full font-medium text-zinc-950 active:scale-98 transition duration-100 cursor-pointer disabled:cursor-not-allowed">
                     Log in
@@ -53,6 +55,10 @@
                 </button>
                 <div class="top-16 right-4 z-20 fixed flex flex-col gap-2 bg-white shadow-sm p-1 rounded-3xl w-fit h-fit"
                     x-show="open" @click.outside="open = false">
+                    <a href="{{ route('articles.index') }}"
+                        class="flex justify-center items-center bg-none px-4 py-2 rounded-full w-32 font-medium text-zinc-600 hover:text-zinc-950 transition">
+                        Articles
+                    </a>
                     <a href='{{ route('login') }}'
                         class="flex justify-center items-center bg-none px-4 py-2 rounded-full w-32 text-zinc-950 active:scale-98 transition duration-100 cursor-pointer disabled:cursor-not-allowed">
                         Log in

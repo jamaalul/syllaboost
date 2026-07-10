@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'google_id', 'avatar', 'last_login_at'])]
+#[Fillable(['name', 'email', 'google_id', 'avatar', 'last_login_at', 'role'])]
 #[Hidden(['remember_token'])]
 class User extends Authenticatable
 {
@@ -38,5 +38,20 @@ class User extends Authenticatable
     public function folders()
     {
         return $this->hasMany(Folder::class)->orderBy('created_at', 'desc');
+    }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class)->orderBy('created_at', 'desc');
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
     }
 }

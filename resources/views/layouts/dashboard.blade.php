@@ -11,7 +11,118 @@
         <div x-show="sidebarOpen" x-transition.opacity class="lg:hidden z-20 fixed inset-0 bg-black/50"
             @click="sidebarOpen = false" style="display: none;"></div>
 
-        <!-- Sidebar -->
+        @if(auth()->user()->isAdmin())
+        <!-- Admin Sidebar -->
+        <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+            class="left-0 z-30 lg:static fixed inset-y-0 flex flex-col bg-zinc-100 w-64 transition-transform lg:translate-x-0 duration-300">
+
+            <!-- Sidebar Header -->
+            <div class="flex justify-between items-center px-6 py-4 border-zinc-200 border-b h-16">
+                <div class="flex items-center gap-3">
+                    <span class="text-indigo-600">
+                        <svg class="size-6" width="44" height="44" viewBox="0 0 44 44" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_admin_logo)">
+                                <path
+                                    d="M7.2132 0.84923C15.4142 9.05024 28.7107 9.05024 36.9117 0.84923L43.2756 7.21319C35.0746 15.4142 35.0746 28.7107 43.2756 36.9117L36.9117 43.2756C29.2982 35.6622 26.6342 24.9751 28.916 15.2089C19.1498 17.4906 8.4627 14.8267 0.849236 7.21319L7.2132 0.84923ZM15.6985 22.0624L22.0624 28.4264L7.2132 43.2756L0.849236 36.9117L15.6985 22.0624Z"
+                                    fill="currentColor" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_admin_logo">
+                                    <rect width="44" height="44" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </span>
+                    <span class="text-zinc-900 font-bold text-sm tracking-wide">Admin Panel</span>
+                </div>
+                <button @click="sidebarOpen = false" class="lg:hidden text-zinc-500 hover:text-zinc-700 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Admin Navigation -->
+            <nav class="flex-1 px-3 py-4 overflow-y-auto space-y-1">
+                <p class="px-3 mb-2 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Overview</p>
+
+                <a href="{{ route('admin.dashboard') }}"
+                    class="group flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150
+                        {{ request()->routeIs('admin.dashboard') ? 'bg-indigo-100 text-indigo-600' : 'text-zinc-500 hover:bg-zinc-200' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5 shrink-0">
+                        <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
+                        <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
+                    </svg>
+                    Dashboard
+                </a>
+
+                <p class="px-3 pt-4 pb-1 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Content</p>
+
+                <a href="{{ route('admin.articles.index') }}"
+                    class="group flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150
+                        {{ request()->routeIs('admin.articles.*') ? 'bg-indigo-100 text-indigo-600' : 'text-zinc-500 hover:bg-zinc-200' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5 shrink-0">
+                        <path fill-rule="evenodd" d="M4.125 3C3.089 3 2.25 3.84 2.25 4.875V18a3 3 0 0 0 3 3h15a3 3 0 0 1-3-3V4.875C17.25 3.839 16.41 3 15.375 3H4.125ZM12 9.75a.75.75 0 0 0 0 1.5h1.5a.75.75 0 0 0 0-1.5H12Zm-.75-2.25a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5H12a.75.75 0 0 1-.75-.75ZM6 12.75a.75.75 0 0 0 0 1.5h7.5a.75.75 0 0 0 0-1.5H6Zm-.75 3.75a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5H6a.75.75 0 0 1-.75-.75ZM6 6.75a.75.75 0 0 0-.75.75v3c0 .414.336.75.75.75h3a.75.75 0 0 0 .75-.75v-3A.75.75 0 0 0 9 6.75H6Z" clip-rule="evenodd" />
+                        <path d="M18.75 6.75h1.875c.621 0 1.125.504 1.125 1.125V18a1.5 1.5 0 0 1-3 0V6.75Z" />
+                    </svg>
+                    Manage Articles
+                </a>
+
+                <a href="{{ route('admin.decks.index') }}"
+                    class="group flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150
+                        {{ request()->routeIs('admin.decks.*') ? 'bg-indigo-100 text-indigo-600' : 'text-zinc-500 hover:bg-zinc-200' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5 shrink-0">
+                        <path d="M16.5 6a3 3 0 0 0-3-3H6a3 3 0 0 0-3 3v7.5a3 3 0 0 0 3 3v-6A4.5 4.5 0 0 1 10.5 6h6Z" />
+                        <path d="M18 7.5a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3h-7.5a3 3 0 0 1-3-3v-7.5a3 3 0 0 1 3-3H18Z" />
+                    </svg>
+                    Manage Products
+                </a>
+
+                <p class="px-3 pt-4 pb-1 text-xs font-semibold text-zinc-500 uppercase tracking-wider">People & Sales</p>
+
+                <a href="{{ route('admin.users.index') }}"
+                    class="group flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150
+                        {{ request()->routeIs('admin.users.*') ? 'bg-indigo-100 text-indigo-600' : 'text-zinc-500 hover:bg-zinc-200' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5 shrink-0">
+                        <path d="M4.5 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM14.25 8.625a3.375 3.375 0 1 1 6.75 0 3.375 3.375 0 0 1-6.75 0ZM1.5 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM17.25 19.128l-.001.144a2.25 2.25 0 0 1-.233.96 10.088 10.088 0 0 0 5.06-1.01.75.75 0 0 0 .42-.643 4.875 4.875 0 0 0-6.957-4.611 8.586 8.586 0 0 1 1.71 5.157v.003Z" />
+                    </svg>
+                    Manage Users
+                </a>
+
+                <a href="{{ route('admin.transactions.index') }}"
+                    class="group flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150
+                        {{ request()->routeIs('admin.transactions.*') ? 'bg-indigo-100 text-indigo-600' : 'text-zinc-500 hover:bg-zinc-200' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5 shrink-0">
+                        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM9 7.5A.75.75 0 0 0 9 9h1.5c.98 0 1.813.626 2.122 1.5H9A.75.75 0 0 0 9 12h3.622a2.251 2.251 0 0 1-2.122 1.5H9a.75.75 0 0 0-.53 1.28l3 3a.75.75 0 1 0 1.06-1.06l-1.57-1.57A3.752 3.752 0 0 0 14.175 12H15a.75.75 0 0 0 0-1.5h-.825A3.733 3.733 0 0 0 13.5 9H15a.75.75 0 0 0 0-1.5H9Z" clip-rule="evenodd" />
+                    </svg>
+                    Transactions
+                </a>
+            </nav>
+
+            <!-- Admin Sidebar Footer -->
+            <div class="p-4 border-zinc-200 border-t">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="flex justify-center items-center bg-indigo-100 rounded-full w-10 h-10 font-bold text-indigo-700">
+                        {{ substr($user->name ?? 'A', 0, 1) }}
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="font-medium text-zinc-900 text-sm truncate">{{ $user->name ?? 'Admin' }}</p>
+                        <p class="text-zinc-500 text-xs truncate">{{ $user->email ?? 'admin@example.com' }}</p>
+                    </div>
+                </div>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                        class="flex justify-center items-center bg-red-50 hover:bg-red-100 px-4 py-2 rounded-lg w-full font-medium text-red-600 text-sm transition-colors">
+                        Log out
+                    </button>
+                </form>
+            </div>
+        </aside>
+
+        @else
+        <!-- User Sidebar -->
         <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
             class="left-0 z-30 lg:static fixed inset-y-0 lg:inset-0 flex flex-col bg-zinc-100 w-64 transition-transform lg:translate-x-0 duration-300">
             <!-- Sidebar Header -->
@@ -70,9 +181,16 @@
                             <path
                                 d="M4.5 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM14.25 8.625a3.375 3.375 0 1 1 6.75 0 3.375 3.375 0 0 1-6.75 0ZM1.5 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM17.25 19.128l-.001.144a2.25 2.25 0 0 1-.233.96 10.088 10.088 0 0 0 5.06-1.01.75.75 0 0 0 .42-.643 4.875 4.875 0 0 0-6.957-4.611 8.586 8.586 0 0 1 1.71 5.157v.003Z" />
                         </svg>
-                        Public Decks
+                        Community Decks
                     </span>
                 </a>
+
+                <span class="flex my-6 border-zinc-200 border-t"></span>
+                <h3 class="font-bold text-zinc-500">Premium Store</h3>
+                <a href="{{ route('store.index') }}" class="group flex items-center w-full px-4 py-2.5 rounded-lg font-medium transition-colors {{ request()->routeIs('store.*') ? 'bg-sky-100 text-sky-500' : 'text-zinc-500 hover:bg-zinc-200' }}">Store</a>
+                <a href="{{ route('cart.index') }}" class="group flex items-center w-full px-4 py-2.5 rounded-lg font-medium transition-colors {{ request()->routeIs('cart.*') || request()->routeIs('checkout.*') ? 'bg-sky-100 text-sky-500' : 'text-zinc-500 hover:bg-zinc-200' }}">Cart</a>
+                <a href="{{ route('transactions.index') }}" class="group flex items-center w-full px-4 py-2.5 rounded-lg font-medium transition-colors {{ request()->routeIs('transactions.*') ? 'bg-sky-100 text-sky-500' : 'text-zinc-500 hover:bg-zinc-200' }}">Purchase History</a>
+
                 <span class="flex my-6 border-zinc-200 border-t"></span>
                 <h3 class="font-bold text-zinc-500">Your Folders</h3>
                 @foreach ($user->folders as $folder)
@@ -110,7 +228,6 @@
                         New Folder
                     </span>
                 </button>
-                <!-- Add more links here later -->
             </nav>
 
             <!-- Sidebar Footer (User Info & Logout) -->
@@ -133,11 +250,12 @@
                 </form>
             </div>
         </aside>
+        @endif
 
         <!-- Main Content -->
         <main class="flex flex-col flex-1 bg-white h-screen">
             <!-- Mobile Header -->
-            <header class="lg:hidden flex justify-between items-center bg-white px-6 py-4 border-zinc-200 border-b h-16">
+            <header class="lg:hidden flex justify-between items-center bg-white border-zinc-200 px-6 py-4 border-b h-16">
                 <button @click="sidebarOpen = true" class="text-zinc-500 hover:text-zinc-700">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
@@ -145,6 +263,7 @@
                     </svg>
                 </button>
                 <div class="flex gap-2">
+                    @if(!auth()->user()->isAdmin())
                     <a href="{{ route('decks.create.json') }}"
                         class="flex justify-center bg-pink-600 px-4 py-2 rounded-full font-semibold text-white hover:scale-105 active:scale-100 transition-all duration-100 cursor-pointer">
                         <span class="flex gap-1">
@@ -157,10 +276,12 @@
                                 </svg>
                                 <span>Create with AI</span>
                             </span>
+                        </span>
                     </a>
                     <div class="bg-zinc-100 rounded-full size-10 overflow-hidden">
                         <img src="{{ asset($user->avatar) }}" alt="Avatar" class="w-full h-full">
                     </div>
+                    @endif
                 </div>
             </header>
 
@@ -169,8 +290,9 @@
                 class="relative flex flex-col flex-1 mr-auto p-6 md:px-8 md:pt-20 md:pb-8 w-full max-w-5xl h-fit min-h-screen overflow-y-auto">
                 <!-- Desktop Header -->
                 <header
-                    class="hidden top-0 z-10 fixed lg:flex justify-end items-center -ml-6 md:-ml-8 p-4 w-full max-w-5xl h-16">
+                    class="hidden top-0 z-10 fixed lg:flex justify-end items-center -ml-6 md:-ml-8 p-4 w-full max-w-5xl h-16 bg-white/80 backdrop-blur-sm">
                     <div class="flex gap-2">
+                        @if(!auth()->user()->isAdmin())
                         <a href="{{ route('decks.create.json') }}"
                             class="flex justify-center bg-pink-600 px-4 py-2 rounded-full font-semibold text-white hover:scale-105 active:scale-100 transition-all duration-100 cursor-pointer">
                             <span class="flex gap-1">
@@ -186,6 +308,7 @@
                         <div class="bg-zinc-100 rounded-full size-10 overflow-hidden">
                             <img src="{{ asset($user->avatar) }}" alt="Avatar" class="w-full h-full">
                         </div>
+                        @endif
                     </div>
                 </header>
                 @yield('main')
